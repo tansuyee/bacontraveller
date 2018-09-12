@@ -2,6 +2,7 @@ const usersController = require('../controllers').users;
 const authController = require('../controllers').auth;
 const postsController = require('../controllers').posts;
 const commentsController = require('../controllers').comments;
+const followsController = require('../controllers').follows;
 const constants = require('../config/constants');
 const passport = require('passport');
 
@@ -27,8 +28,8 @@ module.exports = (app, auth) => {
   app.put('/api/v1/users/:userId', requireAuth(), usersController.update);
   app.delete('/api/v1/users/:userId', adminOnly(usersController.destroy));
 
-  app.post('/api/v1/users/:userId/follow', requireAuth(), usersController.follow);
-  app.delete('/api/v1/users/:userId/follow', requireAuth(), usersController.unfollow);
+  app.post('/api/v1/users/:userId/follow', requireAuth(), followsController.create);
+  app.delete('/api/v1/users/:userId/follow', requireAuth(), followsController.destroy);
 
   app.post('/api/v1/posts', requireAuth(), postsController.create);
   app.get('/api/v1/posts', postsController.list);

@@ -1,5 +1,4 @@
 const User = require('../models').User;
-const Follow = require('../models').Follow;
 
 module.exports = {
   create(req, res) {
@@ -73,38 +72,5 @@ module.exports = {
           .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(400).send(error));
-  },
-  follow(req, res) {
-    if (req.params.userId == req.user.id) {
-      return res.status(404).send({
-        message: 'You cannot follow yourself',
-      });
-    }
-    return Follow
-      .create({
-        target_id: req.params.userId,
-        follower_id: req.user.id,
-      })
-      .then(follow => res.status(201).send())
-      .catch(error => res.status(400).send(error));
-  },
-  unfollow(req, res) {
-    return Follow
-    .findOne({ where: {
-      target_id: req.params.userId,
-      follower_id: req.user.id,
-    }})
-    .then(follow => {
-      if (!follow) {
-        return res.status(404).send({
-          message: 'Not currently following this user',
-        });
-      }
-      return follow
-        .destroy()
-        .then(() => res.status(204).send())
-        .catch(error => res.status(400).send(error));
-    })
-    .catch(error => res.status(400).send(error));
   },
 };
