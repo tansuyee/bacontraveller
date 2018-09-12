@@ -30,9 +30,22 @@ module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
-  update(req, res) {
+  retrieveSelf(req, res) {
     return User
-    .findById(req.params.userId)
+      .findById(req.user.id)
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'User Not Found',
+          });
+        }
+        return res.status(200).send(user);
+      })
+      .catch(error => res.status(400).send(error));
+  },
+  updateSelf(req, res) {
+    return User
+    .findById(req.user.id)
     .then(user => {
       if (!user) {
         return res.status(404).send({
