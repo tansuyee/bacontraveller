@@ -27,7 +27,8 @@ module.exports = (app, auth) => {
   app.put('/api/users/self', requireAuth(), usersController.updateSelf);
   app.delete('/api/users/:userId', adminOnly(usersController.destroy));
 
-  //follows
+  app.post('/api/users/:userId/follow', requireAuth(), usersController.follow);
+  app.delete('/api/users/:userId/follow', requireAuth(), usersController.unfollow);
 
   app.post('/api/posts', requireAuth(), postsController.create);
   app.get('/api/posts', postsController.list);
