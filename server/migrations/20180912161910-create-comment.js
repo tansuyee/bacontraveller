@@ -1,17 +1,11 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Transactions', {
+    return queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      buyer_id: {
-        type: Sequelize.INTEGER
-      },
-      seller_id: {
         type: Sequelize.INTEGER
       },
       post_id: {
@@ -22,6 +16,18 @@ module.exports = {
           key: 'id',
           as: 'post_id',
         },
+      },
+      author_id: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'author_id',
+        },
+      },
+      text: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -34,6 +40,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Transactions');
+    return queryInterface.dropTable('Comments');
   }
 };

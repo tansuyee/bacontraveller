@@ -1,5 +1,6 @@
 const Post = require('../models').Post;
 const Transaction = require('../models').Transaction;
+const Comment = require('../models').Comment;
 
 module.exports = {
   create(req, res) {
@@ -22,6 +23,9 @@ module.exports = {
         include: [{
           model: Transaction,
           as: 'transactions',
+        },{
+          model: Comment,
+          as: 'comments',
         }],
       })
       .then(posts => res.status(200).send(posts))
