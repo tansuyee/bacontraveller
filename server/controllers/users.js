@@ -31,22 +31,15 @@ module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
-  retrieveSelf(req, res) {
+  update(req, res) {
+    // only allow user to update his own profile
+    if (req.user.id != req.params.userId) {
+      return res.status(401).send({
+        message: 'You do not have permission to do this',
+      });
+    }
     return User
-      .findById(req.user.id)
-      .then(user => {
-        if (!user) {
-          return res.status(404).send({
-            message: 'User Not Found',
-          });
-        }
-        return res.status(200).send(user);
-      })
-      .catch(error => res.status(400).send(error));
-  },
-  updateSelf(req, res) {
-    return User
-    .findById(req.user.id)
+    .findById(req.params.userId)
     .then(user => {
       if (!user) {
         return res.status(404).send({

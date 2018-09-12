@@ -14,32 +14,27 @@ adminOnly = (cb) => {
 }
 
 module.exports = (app, auth) => {
-  app.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the BaconTraveller API!'
+  app.get('/api/v1', (req, res) => res.status(200).send({
+    message: 'Welcome to the BaconTraveller API v1!'
   }));
 
-  app.post('/api/login', authController.login);
+  app.post('/api/v1/login', authController.login);
 
-  app.post('/api/users', usersController.create);
-  app.get('/api/users', adminOnly(usersController.list));
-  app.get('/api/users/self', requireAuth(), usersController.retrieveSelf);
-  app.get('/api/users/:userId', usersController.retrieve);
-  app.put('/api/users/self', requireAuth(), usersController.updateSelf);
-  app.delete('/api/users/:userId', adminOnly(usersController.destroy));
+  app.post('/api/v1/users', usersController.create);
+  app.get('/api/v1/users', adminOnly(usersController.list));
+  app.get('/api/v1/users/:userId', usersController.retrieve);
+  app.put('/api/v1/users/:userId', requireAuth(), usersController.update);
+  app.delete('/api/v1/users/:userId', adminOnly(usersController.destroy));
 
-  app.post('/api/users/:userId/follow', requireAuth(), usersController.follow);
-  app.delete('/api/users/:userId/follow', requireAuth(), usersController.unfollow);
+  app.post('/api/v1/users/:userId/follow', requireAuth(), usersController.follow);
+  app.delete('/api/v1/users/:userId/follow', requireAuth(), usersController.unfollow);
 
-  app.post('/api/posts', requireAuth(), postsController.create);
-  app.get('/api/posts', postsController.list);
-  app.get('/api/posts/:postId', postsController.retrieve);
-  app.put('/api/posts/:postId', requireAuth(), postsController.update);
-  app.delete('/api/posts/:postId', requireAuth(), postsController.destroy);
-  app.post('/api/posts/:postId/accept', requireAuth(), postsController.accept);
+  app.post('/api/v1/posts', requireAuth(), postsController.create);
+  app.get('/api/v1/posts', postsController.list);
+  app.get('/api/v1/posts/:postId', postsController.retrieve);
+  app.put('/api/v1/posts/:postId', requireAuth(), postsController.update);
+  app.delete('/api/v1/posts/:postId', requireAuth(), postsController.destroy);
+  app.post('/api/v1/posts/:postId/accept', requireAuth(), postsController.accept);
 
   //comments
-
-  app.get("/protected", requireAuth(), (req, res) => {
-    return res.status(200).send("YAY! this is a protected Route. Your userid is " + req.user.id)
-  })
 }
