@@ -8,4 +8,4 @@ module.exports = {
   jwtSecret: <fillthisin>
 };
 ```
-- Start server with `npm run start:dev`. Api is defined in `./server/routes/index.js`
+- Start server with `yarn start:dev`. Api is defined in `./server/routes/index.js`
