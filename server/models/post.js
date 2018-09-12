@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'creator_id',
       onDelete: 'CASCADE',
     });
+    Post.hasMany(models.Transaction, {
+      foreignKey: 'post_id',
+      as: 'transactions'
+    });
   };
   return Post;
 };

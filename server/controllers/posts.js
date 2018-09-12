@@ -1,4 +1,5 @@
 const Post = require('../models').Post;
+const Transaction = require('../models').Transaction;
 
 module.exports = {
   create(req, res) {
@@ -17,13 +18,23 @@ module.exports = {
   },
   list(req, res) {
     return Post
-      .all()
+      .findAll({
+        include: [{
+          model: Transaction,
+          as: 'transactions',
+        }],
+      })
       .then(posts => res.status(200).send(posts))
       .catch(error => res.status(400).send(error));
   },
   retrieve(req, res) {
     return Post
-      .findById(req.params.postId)
+      .findById(req.params.postId, {
+        include: [{
+          model: Transaction,
+          as: 'transactions',
+        }],
+      })
       .then(post => {
         if (!post) {
           return res.status(404).send({
@@ -85,4 +96,25 @@ module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
+  // user accepts someone (for now, a buyer)'s post
+  accept(req, res) {
+    return Post
+      .findById(req.params.postId)
+      .then(post => {
+        // do not allow a user to accept his own post
+        if (req.user.id == post.creator_id) {
+          return res.status(401).send({
+            message: 'You are not allowed to accept your own post',
+          });
+        }
+        return Transaction
+          .create({
+            buyer_id: post.creator_id,
+            seller_id: req.user.id,
+            post_id: req.params.postId,
+          })
+          .then(transaction => res.status(201).send())
+          .catch(error => res.status(400).send(error));
+        });
+  }
 };

@@ -26,6 +26,7 @@ module.exports = (app, auth) => {
   app.get('/api/posts/:postId', postsController.retrieve);
   app.put('/api/posts/:postId', requireAuth(), postsController.update);
   app.delete('/api/posts/:postId', requireAuth(), postsController.destroy);
+  app.post('/api/posts/:postId/accept', requireAuth(), postsController.accept);
 
   app.get("/protected", requireAuth(), (req, res) => {
     return res.status(200).send("YAY! this is a protected Route. Your userid is " + req.user.id)
