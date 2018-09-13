@@ -1,29 +1,24 @@
-import React, { Component } from 'react';
-import { Grid, Header, Form } from 'semantic-ui-react';
-import styles from './App.module.css';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import Register from './Register'
+import Home from './Home'
 
-class App extends Component {
-  render() {
-    return (
-      <div className={styles.fullbody}>
-        <Grid verticalAlign='middle' style={{ height: '100%' }} centered container>
-          <Grid.Column>
-            <Form size='huge'>
-              <Form.Field>
-                <Header className={styles.logo} textAlign='center'>
-                  BACON IPSUM
-                  <Header.Subheader className={styles.logoSubheader}>Bacon ipsum dolor amet shank andouille jowl pastrami.</Header.Subheader>
-                </Header>
-              </Form.Field>
-              <Form.Input placeholder='Email Address' />
-              <Form.Input placeholder='Password' type='password'/>
-              <Form.Button size='huge' fluid>SIGN IN</Form.Button>
-            </Form>
-          </Grid.Column>
-        </Grid>
-      </div>
-    );
-  }
-}
+const Sidebar = () => (
+    <Router>
+        <div>
+            <ul>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/register">Register</Link>
+                </li>
+            </ul>
+            <hr />
+            <Route path="/" component={Home} />
+            <Route path="/register" component={Register} />
+        </div>
+    </Router>
+)
 
-export default App;
+export default Sidebar;
