@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import { Container, Grid, Image, Header, Form } from 'semantic-ui-react';
-import backgroundImage from './assets/bt-register-background.png';
-import './App.css';
+import { Grid, Header, Form } from 'semantic-ui-react';
+import styles from './App.module.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="fullbody">
+      <div className={styles.fullbody}>
         <Grid verticalAlign='middle' style={{ height: '100%' }} centered container>
           <Grid.Column>
             <Form size='huge'>
               <Form.Field>
-                <Header className='logo' textAlign='center'>
+                <Header className={styles.logo} textAlign='center'>
                   BACON IPSUM
-                  <Header.Subheader className='logo-subheader'>Bacon ipsum dolor amet shank andouille jowl pastrami.</Header.Subheader>
+                  <Header.Subheader className={styles.logoSubheader}>Bacon ipsum dolor amet shank andouille jowl pastrami.</Header.Subheader>
                 </Header>
               </Form.Field>
               <Form.Input placeholder='Email Address' />

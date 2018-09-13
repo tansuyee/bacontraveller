@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background-image: url('assets/bt-register-background.png');
+  background-image: url('./assets/bt-register-background.png');
   background-size: cover;
 }
 
@@ -14,7 +14,7 @@
   color: white !important;
 }
 
-.logo-subheader{
+.logoSubheader{
   font-size: 10pt !important;
   color: white !important;
 }
