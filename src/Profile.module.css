@@ -1,0 +1,53 @@
+.container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-image: url('./assets/register/background.png');
+  background-size: cover;
+  padding-top: 20px;
+}
+
+.menu, .search{
+  color: white;
+}
+
+.title {
+  color: white !important;
+}
+
+.titleSubheader{
+  font-size: 10pt !important;
+  color: white !important;
+}
+
+.rank{
+  font-size: 10pt !important;
+  font-style: italic;
+  color: darkgray;
+}
+
+.bio{
+  font-size: 10pt !important;
+}
+
+.statistics *{
+  color: white !important;
+}
+
+.subContainer{
+  background-color: #252525;
+  height: 100%;
+  margin-top: 20px;
+}
+
+.plannedTripTitle{
+  font-size: 16pt !important;
+  color: white !important;
+  margin-top: 5px !important;
+}
+
+.plannedTripContent *{
+  color: white !important;
+}
