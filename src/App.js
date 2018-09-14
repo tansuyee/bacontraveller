@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Register from './Register'
 import Home from './Home'
 import Profile from './Profile'
+import CountryListing from './CountryListing'
 
 const Sidebar = () => (
     <Router>
@@ -17,11 +18,15 @@ const Sidebar = () => (
                 <li>
                     <Link to="/profile">Profile</Link>
                 </li>
+                <li>
+                    <Link to="/country-listing">Country Listing</Link>
+                </li>
             </ul>
             <hr />
             <Route path="/" component={Home} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
+            <Route path="/country-listing" component={CountryListing} />
         </div>
     </Router>
 )
