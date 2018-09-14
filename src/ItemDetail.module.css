@@ -1,0 +1,93 @@
+:global(body){
+    background-color: #252525 !important;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url('./assets/item-detail/background.png');
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: top;
+    padding-top: 20px;
+}
+
+.container * {
+    color: white !important;
+}
+
+.menu, .search {
+    color: white;
+}
+
+.author{
+    margin-top: 225px;
+}
+
+.authorImage img {
+    border: 3px solid white;
+}
+
+.authorMeta{
+    padding-top: 90px;
+    font-size: 10pt !important;
+}
+
+.authorName{
+    color: #3b8686 !important;
+    font-weight: bold !important;
+}
+
+.datePosted {
+    color: grey !important;
+    font-size: 8pt !important;
+}
+
+.itemTitle, .commentSection{
+    font-size: 18pt !important;
+}
+
+.itemDescription{
+    font-size: 9pt !important;
+    color: lightgray !important;
+}
+
+.offerToHelp {
+    background-color: #3b8686 !important;
+    border-radius: 25px !important;
+}
+
+.descriptionExpand{
+    color: #3b8686 !important;   
+}
+
+.dealDetails *{
+    color: lightgray !important;
+}
+
+.amount {
+    color: #3b8686 !important;
+}
+
+.dealLocation{
+    font-size: 10pt !important;
+    font-weight: bold !important;
+    color: #3b8686 !important;
+}
+
+.commentDivider{
+    width: 100% !important;
+}
+
+.commentAuthorName{
+    color: #3b8686 !important;
+}
+
+.commentActions * {
+    color: lightgray !important;
+}

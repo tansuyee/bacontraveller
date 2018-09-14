@@ -1,0 +1,60 @@
+.container {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url('./assets/country-listing/background.png');
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    padding-top: 20px;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 0, #252525, #252525)
+}
+
+.menu, .search {
+    color: white;
+}
+
+.title {
+    color: white !important;
+}
+
+.titleSubheader {
+    font-size: 10pt !important;
+    color: white !important;
+    margin-bottom: 150px !important;
+}
+
+.content * {
+    color: white !important;
+}
+
+.countryMeta {
+    color: teal !important;
+    font-weight: bold !important;
+    font-size: 8pt !important;
+}
+
+.countryDivider {
+    width: 90%;
+    margin-left: 14px !important;
+}
+
+.browseAll {
+    background-color: #3b8686 !important;
+    border-radius: 25px !important;
+}
+
+.countryItems * {
+    border-radius: 0px !important;
+}
