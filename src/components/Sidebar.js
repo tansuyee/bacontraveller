@@ -46,6 +46,9 @@ class SideBar extends Component {
             <Menu.Item name='Discover' active={false} onClick={() => this.toggleOpen()} />
             <Menu.Item name='Register' active={false} as={Link} to="/register" onClick={() => this.toggleOpen()} />
             <Menu.Item name='Profile' active={false} as={Link} to="/profile" onClick={() => this.toggleOpen()} />
+            <Menu.Item name='Country Listing' active={false} as={Link} to="/country-listing" onClick={() => this.toggleOpen()} />
+            <Menu.Item name='Item Listing' active={false} as={Link} to="/item-listing" onClick={() => this.toggleOpen()} />
+            <Menu.Item name='Item Detail' active={false} as={Link} to="/item-detail" onClick={() => this.toggleOpen()} />
           </Menu>
           <div className={styles.divider} />
           {links}
