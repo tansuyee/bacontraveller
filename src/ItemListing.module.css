@@ -1,0 +1,77 @@
+:global(body){
+    background-color: #252525 !important;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-image: url('./assets/item-listing/background.png');
+    background-size: auto 50%;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: top;
+    padding-top: 20px;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, transparent 0, #252525 50%);
+}
+
+.menu, .search {
+    color: white;
+}
+
+.title {
+    color: white !important;
+}
+
+.titleSubheader {
+    font-size: 10pt !important;
+    color: white !important;
+    margin-bottom: 150px !important;
+}
+
+.content * {
+    color: white !important;
+}
+
+.itemList *{
+    color: white !important;
+}
+
+.itemList > *{
+    background-color: #464646 !important;
+    box-shadow: none !important;    
+}
+
+.itemAuthor {
+    margin-top: -18px;
+}
+
+.itemContent {
+    border: none !important;
+}
+
+.itemName{
+    font-size: 10pt !important;
+}
+
+.itemMeta{
+    font-size: 8pt !important;
+}
+
+.itemStatus{
+    color: white !important;
+    border-radius: 25px !important;
+    background-color: #3b8686 !important;
+}

@@ -4,6 +4,7 @@ import Register from './Register'
 import Home from './Home'
 import Profile from './Profile'
 import CountryListing from './CountryListing'
+import ItemListing from './ItemListing'
 
 const Sidebar = () => (
     <Router>
@@ -21,12 +22,16 @@ const Sidebar = () => (
                 <li>
                     <Link to="/country-listing">Country Listing</Link>
                 </li>
+                <li>
+                    <Link to="/item-listing">Item Listing</Link>
+                </li>
             </ul>
             <hr />
             <Route path="/" component={Home} />
             <Route path="/register" component={Register} />
             <Route path="/profile" component={Profile} />
             <Route path="/country-listing" component={CountryListing} />
+            <Route path="/item-listing" component={ItemListing} />
         </div>
     </Router>
 )
