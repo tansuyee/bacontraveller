@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Grid, Header } from 'semantic-ui-react';
 import styles from './static/css/Home.module.css'
+import {connect} from 'react-redux';
 
 class Home extends Component {
   render() {
+    // console.log(this.props.users);
     return (
       <div className={styles.container}>
         <Grid container>
@@ -21,4 +23,10 @@ class Home extends Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+  return {
+    users: state.users
+  }
+}
+
+export default connect(mapStateToProps)(Home);
