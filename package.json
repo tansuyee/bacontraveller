@@ -7,7 +7,7 @@
   "scripts": {
     "start": "sequelize db:migrate & NODE_ENV=production node ./bin/www",
     "start:dev": "nodemon ./bin/www",
-    "deploy": "gcloud deploy --version=v1",
+    "deploy": "gcloud app deploy --version=v1",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
