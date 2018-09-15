@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 require('./server/config/passport');
 require('./server/routes')(app);
 app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to the CatchAll!',
+    message: 'Welcome to the BaconTraveller server!',
 }));
 
 module.exports = app;
