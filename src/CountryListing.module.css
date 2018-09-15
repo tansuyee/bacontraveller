@@ -1,5 +1,4 @@
 .container {
-    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -8,7 +7,7 @@
     background-image: url('./assets/country-listing/background.png');
     background-size: auto 50%;
     background-repeat: no-repeat;
-    padding-top: 20px;
+    padding-top: 75px;
 }
 
 .container::before {
