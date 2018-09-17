@@ -36,7 +36,7 @@ module.exports = {
   jwtSecret: "anythingyouwanthere"
 };
 ```
-- Ensure that your postgres process is running, e.g. `ps aux | grep postgres` 
+- Ensure that your postgres database is running, e.g. `ps aux | grep postgres`, if not start it.
 - Run `yarn add sequelize -g` to install sequelize globally, then run `sequelize db:migrate` in the project root directory to run the database migrations. You should verify that the tables have been created in the postgres db. This means that your db-server connection is working.
 - Install dependencies with `yarn install`
 - Start server with `yarn start:dev`
