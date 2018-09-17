@@ -39,4 +39,4 @@ module.exports = {
 - Run `yarn add sequelize -g` to install sequelize globally, then run `sequelize db:migrate` in the project root directory to run the database migrations. You should verify that the tables have been created in the postgres db. This means that your db-server connection is working.
 - `yarn install`
 - Start server with `yarn start:dev`
-- Verify that you can hit the users endpoint - refer to api documentation, and am able to create a user.
+- Verify that you can hit the users endpoint, and am able to create a user - refer to api documentation. That should mean that everything is working.
