@@ -31,6 +31,7 @@
 }
 ```
 - Create another file `./server/config/secrets.js` that looks like this. The secret can be anything you want.
+```
 module.exports = {  
   jwtSecret: "anythingyouwanthere"
 };
