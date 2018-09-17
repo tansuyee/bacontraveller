@@ -1,0 +1,10 @@
+.menu, .search{
+  color: white;
+  z-index: 1;
+}
+
+.pusher{
+  position: absolute;
+  left: 0;
+  right: 0;
+}

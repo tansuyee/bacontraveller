@@ -1,11 +1,10 @@
-import React from 'react'
-import Sidebar from './components/Sidebar';
+import React from 'react';
+import Header from './components/Header';
 import Main from './components/Main';
 
-const App = () => (
+const App = (props) => (
   <div>
-    <Sidebar />
-    <Main />
+    <Header path={props.location.pathname} content={<Main />} />
   </div>
 )
 

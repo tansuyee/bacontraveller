@@ -3,7 +3,6 @@
 }
 
 .container {
-    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -14,7 +13,7 @@
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: top;
-    padding-top: 20px;
+    padding-top: 75px;
 }
 
 .container::before {
@@ -51,7 +50,7 @@
 
 .itemList > *{
     background-color: #464646 !important;
-    box-shadow: none !important;    
+    box-shadow: none !important;
 }
 
 .itemAuthor {

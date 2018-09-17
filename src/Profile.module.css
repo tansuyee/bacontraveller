@@ -4,6 +4,9 @@
   width: 100%;
   height: 100%;
   z-index: 9999;
+  padding-top: 75px;
+  background-size: auto 40% !important;
+  background-image: url('./assets/profile/background.png') !important;
 }
 
 .menu, .search{
@@ -47,15 +50,4 @@
 
 .plannedTripContent *{
   color: white !important;
-}
-
-.pusher{
-  background-color: transparent !important;
-  border: none;
-  margin: 0px;
-  padding: 0px;
-  background-image: url('./assets/profile/background.png') !important;
-  background-size: auto 40% !important;
-  background-position: center top !important;
-  padding-top: 20px;
 }

@@ -1,6 +1,6 @@
-import React from 'react'
-import { Grid, Header, Icon, Divider, Button, Card } from 'semantic-ui-react'
-import styles from './CountryListing.module.css'
+import React, { Component } from 'react';
+import { Grid, Header, Divider, Button, Card } from 'semantic-ui-react';
+import styles from './CountryListing.module.css';
 
 const Country = () => (
     <Grid className={styles.content} container>
@@ -31,29 +31,26 @@ const Country = () => (
     </Grid>
 )
 
-const CountryListing = () => (
-    <div className={styles.container}>
-        <Grid container>
-            <Grid.Row>
-                <Grid.Column className={styles.menu} floated='left' width={5} textAlign="left">
-                    <Icon name='th' size='big' link />
-                </Grid.Column>
-                <Grid.Column className={styles.search} floated='right' width={5} textAlign='right'>
-                    <Icon name='search' size='big' />
-                </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-                <Grid.Column>
-                    <Header className={styles.title} as='h1'>
-                        <span>Pork belly kevin ham</span>
-                        <Header.Subheader className={styles.titleSubheader}>Leberkas biltong hamburger, bacon sausage swine capicola. </Header.Subheader>
-                    </Header>
-                </Grid.Column>
-            </Grid.Row>
-        </Grid>
-        <Country />
-        <Country />
-    </div>
-)
+class CountryListing extends Component {
 
-export default CountryListing
+  render() {
+    return (
+      <div className={styles.container}>
+          <Grid container>
+              <Grid.Row>
+                  <Grid.Column>
+                      <Header className={styles.title} as='h1'>
+                          <span>Pork belly kevin ham</span>
+                          <Header.Subheader className={styles.titleSubheader}>Leberkas biltong hamburger, bacon sausage swine capicola. </Header.Subheader>
+                      </Header>
+                  </Grid.Column>
+              </Grid.Row>
+          </Grid>
+          <Country />
+          <Country />
+      </div>
+    )
+  }
+}
+
+export default CountryListing;
