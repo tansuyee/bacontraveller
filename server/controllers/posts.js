@@ -1,6 +1,7 @@
 const Post = require('../models').Post;
 const Transaction = require('../models').Transaction;
 const Comment = require('../models').Comment;
+const User = require('../models').User;
 
 module.exports = {
   create(req, res) {
@@ -26,6 +27,9 @@ module.exports = {
         },{
           model: Comment,
           as: 'comments',
+        },{
+          model: User,
+          attributes: ["id", "username", "image_url"]
         }],
       })
       .then(posts => res.status(200).send(posts))
@@ -37,6 +41,12 @@ module.exports = {
         include: [{
           model: Transaction,
           as: 'transactions',
+        },{
+          model: Comment,
+          as: 'comments',
+        },{
+          model: User,
+          attributes: ["id", "username", "image_url"]
         }],
       })
       .then(post => {
