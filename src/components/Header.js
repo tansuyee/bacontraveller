@@ -27,6 +27,7 @@ class Header extends React.Component {
                       <Menu.Item name='Country Listing' active={this.props.path === "/country-listing"} as={Link} to="/country-listing" onClick={this.onSidebarHidden} />
                       <Menu.Item name='Item Listing' active={this.props.path === "/item-listing"} as={Link} to="/item-listing" onClick={this.onSidebarHidden} />
                       <Menu.Item name='Item Detail' active={this.props.path === "/item-detail"} as={Link} to="/item-detail" onClick={this.onSidebarHidden} />
+                      <Menu.Item name='Offer to Help' active={this.props.path === "/offer-to-help"} as={Link} to="/offer-to-help" onClick={this.onSidebarHidden} />
                     </Sidebar>
 
                     <Sidebar.Pusher>
