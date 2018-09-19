@@ -1,3 +1,0 @@
-dispatch:
-- url: "api.bacontraveller.tk/*"
-  service: api
