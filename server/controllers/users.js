@@ -1,4 +1,6 @@
 const User = require('../models').User;
+const Follow = require('../models').Follow;
+const Sequelize = require('sequelize')
 
 module.exports = {
   create(req, res) {
@@ -19,7 +21,16 @@ module.exports = {
   },
   retrieve(req, res) {
     return User
-      .findById(req.params.userId)
+      .findById(req.params.userId, {
+        attributes: {
+          include: [[Sequelize.fn('COUNT', Sequelize.col('followers.id')), 'no_followers']]
+        },
+        include: [{
+          model: Follow,
+          as: 'followers',
+        }],
+        group: ['User.id', 'followers.id']
+      })
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -28,7 +39,7 @@ module.exports = {
         }
         return res.status(200).send(user);
       })
-      .catch(error => res.status(400).send(error));
+      .catch(error => {console.log(error); res.status(400).send(error)});
   },
   update(req, res) {
     // only allow user to update his own profile
