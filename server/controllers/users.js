@@ -1,6 +1,7 @@
 const User = require('../models').User;
 const Follow = require('../models').Follow;
-const Sequelize = require('sequelize')
+const Transaction = require('../models').Transaction;
+const sequelize = require('../models').sequelize;
 
 module.exports = {
   create(req, res) {
@@ -23,13 +24,24 @@ module.exports = {
     return User
       .findById(req.params.userId, {
         attributes: {
-          include: [[Sequelize.fn('COUNT', Sequelize.col('followers.id')), 'no_followers']]
+          include: [
+            [(sequelize.literal('(select count(*) from "Follows" f, "Users" u where u.id = f.target_id and u.id=' + req.params.userId + ')')), 'followers_count'],
+            [(sequelize.literal('(select count(*) from "Transactions" t, "Users" u where (u.id = t.buyer_id or u.id=t.seller_id) and u.id=' + req.params.userId + ' and t.status like \'COMPLETED\')')), 'deals_closed_count'],
+          ],
         },
         include: [{
           model: Follow,
           as: 'followers',
-        }],
-        group: ['User.id', 'followers.id']
+        },{
+          model: Follow,
+          as: 'following',
+        },{
+          model: Transaction,
+          as: 'buy',
+        },{
+          model: Transaction,
+          as: 'sell',
+        }]
       })
       .then(user => {
         if (!user) {

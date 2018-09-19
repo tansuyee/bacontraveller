@@ -126,9 +126,10 @@ module.exports = {
             buyer_id: post.creator_id,
             seller_id: req.user.id,
             post_id: req.params.postId,
+            status: 'PENDING'
           })
           .then(transaction => res.status(201).send())
           .catch(error => res.status(400).send(error));
         });
-  }
+    }
 };
