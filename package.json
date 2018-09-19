@@ -15,7 +15,6 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "prestart": "npm install -g serve",
     "local": "yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
