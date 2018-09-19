@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { Grid, Header, Form, Message } from 'semantic-ui-react';
+import { Grid, Header, Form, Message, Icon } from 'semantic-ui-react';
 import styles from '../static/css/Register.module.css';
 
 class Register extends Component {
@@ -31,6 +31,7 @@ class Register extends Component {
 
   render() {
     const { signIn, email, username, password } = this.state;
+    let isFetching = this.props.auth.login && this.props.auth.login.isFetching;
 
     if (this.props.auth.isLoggedIn) {
       this.props.history.push("/profile");
@@ -38,6 +39,7 @@ class Register extends Component {
 
     return (
       <div className={styles.container}>
+        <Icon size='big' style={{paddingTop:30, paddingLeft:35}} name='arrow left' onClick={this.props.history.goBack} />
         <Grid className={styles.grid} verticalAlign='middle' centered container>
           <Grid.Column>
             <Form size='huge' onSubmit={this.handleSubmit}>
@@ -53,8 +55,8 @@ class Register extends Component {
               <Form.Input placeholder='Username' name='username' value={username} onChange={this.handleChange}/>
               <Form.Input placeholder='Password' name='password' value={password} type='password' onChange={this.handleChange}/>
               { signIn ?
-                <Form.Button size='huge' fluid >SIGN IN</Form.Button> :
-                <Form.Button size='huge' fluid >SIGN UP</Form.Button>
+                <Form.Button size='huge' fluid loading={isFetching} disabled={isFetching}>SIGN IN</Form.Button> :
+                <Form.Button size='huge' fluid loading={isFetching} disabled={isFetching}>SIGN UP</Form.Button>
               }
               <Form.Field>
                 <Header textAlign='center'>
