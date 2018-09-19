@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from '../Home';
 import Profile from '../Profile';
 import CountryListing from './CountryListing';
-import ItemListing from '../ItemListing';
+import ItemListing from './ItemListing';
 import ItemDetail from '../ItemDetail';
 
 const Main = () => (
