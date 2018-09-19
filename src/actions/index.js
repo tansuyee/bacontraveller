@@ -5,9 +5,26 @@ import {
   LOGIN_FAILURE,
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
-  SIGNUP_FAILURE
+  SIGNUP_FAILURE,
+  POST_GET_ALL
 } from './types';
 import { API_URL } from '../constant';
+
+function getAuthorisedRequest(url) {
+  return axios.get(
+    url,
+    { headers:
+      {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+    })
+}
+
+export function getAllPosts() {
+  const url = API_URL.GET_ALL_POST;
+  const request = axios.get(url);
+
+  return {type: POST_GET_ALL, payload: request};
+}
+
 
 export function signup(creds) {
   return function (dispatch) {
@@ -42,7 +59,7 @@ export function login(creds) {
     })
     .then((response) => {
       console.log(response);
-      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('access_token', response.data.token)
       dispatch(receiveLogin(response.data))
     })
     .catch((err) => {
