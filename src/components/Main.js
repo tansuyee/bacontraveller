@@ -4,7 +4,7 @@ import Home from '../Home';
 import Profile from '../Profile';
 import CountryListing from './CountryListing';
 import ItemListing from './ItemListing';
-import ItemDetail from '../ItemDetail';
+import ItemDetail from './ItemDetail';
 import CreateRequest from '../CreateRequest';
 
 const Main = () => (
