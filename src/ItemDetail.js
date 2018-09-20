@@ -20,15 +20,8 @@ const SampleComment = () => (
 
 const ItemDetail = () => (
     <div className={styles.container}>
+        <div className={styles.itemImage}/>
         <Grid container>
-            <Grid.Row>
-                <Grid.Column className={styles.menu} floated='left' width={5} textAlign="left">
-                    <Icon name='th' size='big' link />
-                </Grid.Column>
-                <Grid.Column className={styles.search} floated='right' width={5} textAlign='right'>
-                    <Icon name='search' size='big' />
-                </Grid.Column>
-            </Grid.Row>
             <Grid.Row>
                 <Grid.Column>
                     <Item className={styles.author}>

@@ -8,3 +8,12 @@
   left: 0;
   right: 0;
 }
+
+.fab {
+  position: fixed;
+  display: block;
+  bottom: 20px;
+  right: 20px;
+  background-color: #3b8686 !important;
+  color: white !important;
+}
