@@ -19,7 +19,7 @@ class ItemListing extends Component {
     return (
       <Card key={post.id}>
         <Image src={post.item_image_url} />
-        <Image className={styles.itemAuthor} src="https://randomuser.me/api/portraits/women/68.jpg" size='mini' circular centered />
+        <Image className={styles.itemAuthor} src={post.User.image_url || "https://randomuser.me/api/portraits/women/68.jpg"} size='mini' circular centered />
         <Card.Content className={styles.itemContent} textAlign='center'>
           <Card.Header className={styles.itemName}>{post.item_name}</Card.Header>
           <Card.Meta className={styles.itemMeta}>Willing to pay {post.price}</Card.Meta>

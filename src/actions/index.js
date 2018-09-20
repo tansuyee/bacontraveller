@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import axios from 'axios';
 import {
   LOGIN_REQUEST,
@@ -6,16 +7,54 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
-  POST_GET_ALL
+  POST_GET_ALL,
+  POST_GET,
+  POST_ACCEPT
 } from './types';
 import { API_URL } from '../constant';
 
-function getAuthorisedRequest(url) {
+function authorisedGetRequest(url) {
   return axios.get(
     url,
     { headers:
       {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
     })
+}
+
+function authrisedPostRequest(extra_params) {
+  let params = {
+    method: 'post',
+    headers: {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+  }
+  return axios(_.merge(params, extra_params));
+}
+
+export function commentPost(data) {
+  const url = API_URL.POST_BASE + `/${data.id}/comments`;
+  const request = authrisedPostRequest({
+    url,
+    data: {
+      text: data.text
+    }
+  });
+
+  return {type: POST_ACCEPT, payload: request};
+}
+
+export function acceptPost(id) {
+  const url = API_URL.POST_BASE + `/${id}/accept`;
+  const request = authrisedPostRequest({
+    url
+  });
+
+  return {type: POST_ACCEPT, payload: request};
+}
+
+export function getPost(id) {
+  const url = API_URL.POST_BASE + `/${id}`;
+  const request = axios.get(url);
+
+  return {type: POST_GET, payload: request};
 }
 
 export function getAllPosts() {

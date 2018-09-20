@@ -14,7 +14,8 @@ const Main = () => (
       <Route path='/profile' component={Profile}/>
       <Route path="/country-listing" component={CountryListing} />
       <Route path="/item-listing/:country" component={ItemListing} />
-      <Route path="/item-detail" component={ItemDetail} />
+
+      <Route path="/item-detail/:id" component={ItemDetail} />
       <Route path='/create-request' component={CreateRequest} />
     </Switch>
   </main>
