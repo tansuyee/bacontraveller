@@ -9,6 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import App from './App';
 import Register from './components/Register';
+import ItemDetail from './components/ItemDetail';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
@@ -19,6 +20,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route path="/register" component={Register} />
+        <Route path="/item-detail/:id" component={ItemDetail} />
         <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>

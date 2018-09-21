@@ -2,6 +2,13 @@
     background-color: #252525 !important;
 }
 
+.back {
+  position: relative;
+  z-index: 10000;
+  padding-top: 30px;
+  padding-left: 35px;
+}
+
 .container {
     top: 0;
     left: 0;
