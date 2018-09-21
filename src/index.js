@@ -18,15 +18,15 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(crea
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <BrowserRouter>
-      <AuthContainer>
+    <AuthContainer>
+      <BrowserRouter>
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/item-detail/:id" component={ItemDetail} />
           <Route path="/" component={App} />
         </Switch>
-      </AuthContainer>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthContainer>
   </Provider>
   , document.getElementById('root'));
 registerServiceWorker();
