@@ -61,7 +61,7 @@ class ItemDetail extends Component {
   }
 
   renderComments(comments) {
-    return comments.map((comment) => {
+    return _.orderBy(comments, 'createdAt', 'desc').map((comment) => {
       return this.renderComment(comment);
     })
   }

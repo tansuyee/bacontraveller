@@ -5,4 +5,5 @@ export const API_URL = {
   SIGNUP: `${ROOT_API}/v1/users`,
   GET_ALL_POST: `${ROOT_API}/v1/posts`,
   POST_BASE: `${ROOT_API}/v1/posts`,
+  USER_BASE: `${ROOT_API}/v1/users`,
 }
