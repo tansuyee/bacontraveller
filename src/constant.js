@@ -251,28 +251,3 @@ export const countryOptions = [
   { key: 'zm', value: 'zm', flag: 'zm', text: 'Zambia' },
   { key: 'zw', value: 'zw', flag: 'zw', text: 'Zimbabwe' },
 ]
-
-// const flagRenderer = item => <Flag name={item.countryCode} />
-//
-// const FlagExampleTable = () => (
-//   <Table>
-//     <Table.Header>
-//       <Table.Row>
-//         <Table.HeaderCell>Country</Table.HeaderCell>
-//         <Table.HeaderCell>Name</Table.HeaderCell>
-//         <Table.HeaderCell>Country Code</Table.HeaderCell>
-//         <Table.HeaderCell>Alias</Table.HeaderCell>
-//       </Table.Row>
-//     </Table.Header>
-//     <Table.Body>
-//       {countries.map(country => (
-//         <Table.Row key={country.countryCode}>
-//           <Table.Cell>{flagRenderer(country)}</Table.Cell>
-//           <Table.Cell>{country.name}</Table.Cell>
-//           <Table.Cell>{country.countryCode}</Table.Cell>
-//           <Table.Cell>{country.alias}</Table.Cell>
-//         </Table.Row>
-//       ))}
-//     </Table.Body>
-//   </Table>
-// )

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Header, Card, Image, Statistic, Icon, Item, Loader } from 'semantic-ui-react';
+import { Button, Grid, Header, Card, Image, Statistic, Icon, Item, Loader } from 'semantic-ui-react';
 import styles from '../static/css/UserView.module.css';
 import moment from 'moment';
 
@@ -61,25 +61,29 @@ class UserView extends Component {
   }
 
   render() {
-    if (_.isEmpty(this.props.users)) {
+    if (_.isEmpty(this.props.users) || _.isEmpty(this.props.auth.login)) {
       return (
         <Loader />
       );
     }
 
-    const currUser = this.props.users[this.props.match.params.id];
+    const user = this.props.users[this.props.match.params.id];
 
-    if (!currUser) {
+    if (!user) {
       return (
         <Loader />
       );
     }
 
     const userStats = [
-        { key: 'dealClosed', label: 'Deal Closed', value: currUser.deals_closed_count },
-        { key: 'followers', label: 'Followers', value: currUser.followers_count },
-        { key: 'following', label: 'Following', value: currUser.following.length },
+        { key: 'dealClosed', label: 'Deal Closed', value: user.deals_closed_count },
+        { key: 'followers', label: 'Followers', value: user.followers_count },
+        { key: 'following', label: 'Following', value: user.following.length },
     ]
+
+    console.log(this.props.auth.login.user.id);
+    console.log(_.find(user.followers, {'follower_id': this.props.auth.login.user.id}));
+    let hasFollowed = _.find(user.followers, {'follower_id': this.props.auth.login.user.id});
 
     return (
       <div>
@@ -90,6 +94,12 @@ class UserView extends Component {
               <Grid.Column>
                 <Header className={styles.title} as='h1'>
                   <span>Profile</span>
+                  { hasFollowed ?
+                    <Button className={styles.follow} floated='right' size='mini'
+                      onClick={() => this.props.unfollowUser(user.id)}>Unfollow</Button> :
+                    <Button className={styles.follow} floated='right' size='mini'
+                      onClick={() => this.props.followUser(user.id)}>Follow</Button>
+                  }
                 </Header>
               </Grid.Column>
             </Grid.Row>
@@ -97,14 +107,14 @@ class UserView extends Component {
               <Grid.Column>
                 <Card>
                   <Card.Content>
-                   { currUser.image_url ?
-                     <Image floated='left' size='tiny' src={currUser.image_url} /> :
+                   { user.image_url ?
+                     <Image floated='left' size='tiny' src={user.image_url} /> :
                      <Image floated='left' size='tiny' src='https://randomuser.me/api/portraits/women/8.jpg' />
                    }
                   <Card.Header>
-                    {currUser.username}
+                    {user.username}
                     <Header.Subheader className={styles.rank}>
-                      Joined {moment(currUser.createdAt).format("MMMM Do YYYY")}
+                      Joined {moment(user.createdAt).format("MMMM Do YYYY")}
                     </Header.Subheader>
                     </Card.Header>
                     <Card.Meta className={styles.bio}>
@@ -121,8 +131,8 @@ class UserView extends Component {
             </Grid.Row>
           </Grid>
           <div className={styles.subContainer}>
-            {this.renderRequestsOrOfferings(currUser.posts_buy, true)}
-            {this.renderRequestsOrOfferings(currUser.transactions_sell, false)}
+            {this.renderRequestsOrOfferings(user.posts_buy, true)}
+            {this.renderRequestsOrOfferings(user.transactions_sell, false)}
           </div>
         </div>
       </div>
@@ -132,7 +142,8 @@ class UserView extends Component {
 
 function mapStateToProps(state) {
   return {
-    users: state.users
+    users: state.users,
+    auth: state.auth
   };
 }
 
