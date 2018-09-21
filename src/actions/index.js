@@ -9,7 +9,9 @@ import {
   SIGNUP_FAILURE,
   POST_GET_ALL,
   POST_GET,
-  POST_ACCEPT
+  POST_ACCEPT,
+  POST_COMMENT,
+  USER_GET
 } from './types';
 import { API_URL } from '../constant';
 
@@ -29,6 +31,27 @@ function authrisedPostRequest(extra_params) {
   return axios(_.merge(params, extra_params));
 }
 
+export function getUser(id) {
+  const url = API_URL.USER_BASE + `/${id}`;
+  const request = axios.get(url);
+
+  return {type: USER_GET, payload: request};
+}
+
+export function configAndInitialize() {
+  return function (dispatch) {
+
+    const token = localStorage.getItem('access_token');
+    const userId = JSON.parse(atob(_.split(token, '.')[1])).id;
+    const url = API_URL.USER_BASE + `/${userId}`;
+
+    return axios.get(url)
+    .then((response) => {
+      dispatch(receiveLogin(response.data))
+    })
+  }
+}
+
 export function commentPost(data) {
   const url = API_URL.POST_BASE + `/${data.id}/comments`;
   const request = authrisedPostRequest({
@@ -38,7 +61,7 @@ export function commentPost(data) {
     }
   });
 
-  return {type: POST_ACCEPT, payload: request};
+  return {type: POST_COMMENT, payload: request};
 }
 
 export function acceptPost(id) {

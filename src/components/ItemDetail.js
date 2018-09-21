@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { Grid, Header, Icon, Comment, Divider, Button, Item, Image, Loader } from 'semantic-ui-react';
+import { Button, Comment, Confirm, Divider, Grid, Header, Icon, Item, Image, Loader } from 'semantic-ui-react';
 import styles from '../static/css/ItemDetail.module.css';
 import moment from 'moment';
 import CommentModal from './CommentModal';
@@ -26,13 +26,24 @@ const SampleComment = () => (
 
 class ItemDetail extends Component {
 
+  constructor(props) {
+    super()
+
+    this.state = {
+      confirmModalOpen: false,
+    }
+  }
+
+  open = () => this.setState({ open: true })
+  close = () => this.setState({ open: false })
+
   componentDidMount() {
     this.props.getPost(this.props.match.params.id);
   }
 
   renderComment(comment) {
     return (
-      <Comment>
+      <Comment key={comment.id}>
         <Comment.Avatar as={Image} src={'https://randomuser.me/api/portraits/women/40.jpg'} circular />
         <Comment.Content>
           <Comment.Author className={styles.commentAuthorName}>Jane Doe</Comment.Author>
@@ -50,7 +61,7 @@ class ItemDetail extends Component {
   }
 
   renderComments(comments) {
-    return comments.map((comment) => {
+    return _.orderBy(comments, 'createdAt', 'desc').map((comment) => {
       return this.renderComment(comment);
     })
   }
@@ -66,6 +77,7 @@ class ItemDetail extends Component {
 
     return (
       <div className={styles.container}>
+        <Icon className={styles.back} size='big' color='black' name='arrow left' onClick={this.props.history.goBack} />
         <Image className={styles.itemImage} src={post.item_image_url} />
           <Grid container>
             <Grid.Row>
@@ -93,7 +105,8 @@ class ItemDetail extends Component {
                   </Divider>
                   <Header className={styles.dealDetails}>
                     <Button className={styles.offerToHelp} floated='right' size='mini'
-                      onClick={() => this.props.acceptPost(post.id)}>OFFER TO HELP</Button>
+                      onClick={this.open}>OFFER TO HELP</Button>
+                    <Confirm open={this.state.open} onCancel={this.close} onConfirm={() => {this.props.acceptPost(post.id); this.close();}} />
                     <span>Willing to pay </span>
                     <span className={styles.amount}>{post.price}</span>
                     <Header.Subheader>
