@@ -62,9 +62,18 @@
 
 .plannedTripContent *{
   color: white !important;
+  z-index: 10000;
 }
 
 .edit {
   background-color: white !important;
   border-radius: 25px !important;
+}
+
+.back {
+  position: absolute;
+  z-index: 10000;
+  padding-top: 30px;
+  padding-left: 35px;
+  color: white !important;
 }

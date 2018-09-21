@@ -7,6 +7,7 @@ import {
   SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_FAILURE,
+  LOGOUT,
   POST_GET_ALL,
   POST_GET,
   POST_ACCEPT,
@@ -39,16 +40,18 @@ export function getUser(id) {
 }
 
 export function configAndInitialize() {
-  return function (dispatch) {
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    return function (dispatch) {
 
-    const token = localStorage.getItem('access_token');
-    const userId = JSON.parse(atob(_.split(token, '.')[1])).id;
-    const url = API_URL.USER_BASE + `/${userId}`;
+      const userId = JSON.parse(atob(_.split(token, '.')[1])).id;
+      const url = API_URL.USER_BASE + `/${userId}`;
 
-    return axios.get(url)
-    .then((response) => {
-      dispatch(receiveLogin(response.data))
-    })
+      return axios.get(url)
+      .then((response) => {
+        dispatch(receiveLogin({user: response.data}))
+      })
+    }
   }
 }
 
@@ -134,6 +137,16 @@ export function login(creds) {
   }
 }
 
+export function logOut() {
+  localStorage.removeItem('access_token');
+  return {type: LOGOUT,
+    payload: {
+      isFetching: false,
+      isAuthenticated: false,
+    }
+  }
+}
+
 function requestSignup(creds) {
   return {
     type: SIGNUP_REQUEST,
@@ -184,7 +197,7 @@ function receiveLogin(user) {
       isFetching: false,
       isAuthenticated: true,
       token: user.token,
-      user: user
+      user: user.user
     }
   }
 }

@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Button, Comment, Confirm, Divider, Grid, Header, Icon, Item, Image, Loader } from 'semantic-ui-react';
 import styles from '../static/css/ItemDetail.module.css';
 import moment from 'moment';
@@ -87,7 +88,7 @@ class ItemDetail extends Component {
                   <Item.Content>
                     <Item.Header className={styles.authorMeta}>
                       <span>Requested by </span>
-                      <span className={styles.authorName}>{post.User.username}</span>
+                      <Link className={styles.authorName} to={`/user/${post.User.id}`}>{post.User.username}</Link>
                       <Header.Subheader className={styles.datePosted}>
                         Posted {moment(post.createdAt).fromNow()}
                       </Header.Subheader>
@@ -131,9 +132,6 @@ class ItemDetail extends Component {
                 <Grid.Column>
                   <Comment.Group>
                     {this.renderComments(post.comments)}
-                    <SampleComment />
-                    <SampleComment />
-                    <SampleComment />
                   </Comment.Group>
                 </Grid.Column>
               </Grid.Row>

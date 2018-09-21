@@ -5,7 +5,8 @@ import {
   LOGIN_REQUEST,
   SIGNUP_SUCCESS,
   SIGNUP_REQUEST,
-  SIGNUP_FAILURE
+  SIGNUP_FAILURE,
+  LOGOUT
 } from '../actions/types';
 
 export default function (state = { isLoggedIn: false }, action) {
@@ -19,6 +20,8 @@ export default function (state = { isLoggedIn: false }, action) {
     case SIGNUP_FAILURE:
     case SIGNUP_REQUEST:
       return _.extend({}, state, { login: action.payload });
+    case LOGOUT:
+      return _.extend({}, state, { isLoggedIn: false, login: action.payload });
     default:
       return state;
   }
