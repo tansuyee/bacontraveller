@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     User.hasMany(models.Post, {
       foreignKey: 'creator_id',
-      as: 'buying_posts'
+      as: 'posts_buy'
     });
     User.hasMany(models.Follow, {
       foreignKey: 'target_id',
@@ -34,12 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       as: 'following'
     });
     User.hasMany(models.Transaction, {
-      foreignKey: 'buyer_id',
-      as: 'buy'
-    });
-    User.hasMany(models.Transaction, {
       foreignKey: 'seller_id',
-      as: 'sell'
+      as: 'transactions_sell'
     });
   };
 

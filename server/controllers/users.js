@@ -92,14 +92,15 @@ const self = module.exports = {
         model: Follow,
         as: 'following',
       },{
-        model: Transaction,
-        as: 'buy',
+        model: Post,
+        as: 'posts_buy',
         include: [{
-          model: Post
+          model: Transaction,
+          as: 'transactions'
         }]
       },{
         model: Transaction,
-        as: 'sell',
+        as: 'transactions_sell',
         include: [{
           model: Post
         }]
