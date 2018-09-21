@@ -1,9 +1,10 @@
 const User = require('../models').User;
 const Follow = require('../models').Follow;
 const Transaction = require('../models').Transaction;
+const Post = require('../models').Post;
 const sequelize = require('../models').sequelize;
 
-module.exports = {
+const self = module.exports = {
   create(req, res) {
     return User
       .create({
@@ -22,27 +23,7 @@ module.exports = {
   },
   retrieve(req, res) {
     return User
-      .findById(req.params.userId, {
-        attributes: {
-          include: [
-            [(sequelize.literal('(select count(*) from "Follows" f, "Users" u where u.id = f.target_id and u.id=' + req.params.userId + ')')), 'followers_count'],
-            [(sequelize.literal('(select count(*) from "Transactions" t, "Users" u where (u.id = t.buyer_id or u.id=t.seller_id) and u.id=' + req.params.userId + ' and t.status like \'COMPLETED\')')), 'deals_closed_count'],
-          ],
-        },
-        include: [{
-          model: Follow,
-          as: 'followers',
-        },{
-          model: Follow,
-          as: 'following',
-        },{
-          model: Transaction,
-          as: 'buy',
-        },{
-          model: Transaction,
-          as: 'sell',
-        }]
-      })
+      .findById(req.params.userId, self.fullAttributes(req.params.userId))
       .then(user => {
         if (!user) {
           return res.status(404).send({
@@ -96,4 +77,33 @@ module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
+  fullAttributes: function(userId) {
+    return {
+      attributes: {
+        include: [
+          [(sequelize.literal('(select count(*) from "Follows" f, "Users" u where u.id = f.target_id and u.id=' + userId + ')')), 'followers_count'],
+          [(sequelize.literal('(select count(*) from "Transactions" t, "Users" u where (u.id = t.buyer_id or u.id=t.seller_id) and u.id=' + userId + ' and t.status like \'COMPLETED\')')), 'deals_closed_count'],
+        ],
+      },
+      include: [{
+        model: Follow,
+        as: 'followers',
+      },{
+        model: Follow,
+        as: 'following',
+      },{
+        model: Transaction,
+        as: 'buy',
+        include: [{
+          model: Post
+        }]
+      },{
+        model: Transaction,
+        as: 'sell',
+        include: [{
+          model: Post
+        }]
+      }]
+    }
+  }
 };
