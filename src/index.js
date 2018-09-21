@@ -8,6 +8,7 @@ import ReduxThunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
 import 'semantic-ui-css/semantic.min.css';
 import App from './App';
+import AuthContainer from './components/AuthContainer';
 import Register from './components/Register';
 import ItemDetail from './components/ItemDetail';
 import reducers from './reducers';
@@ -18,11 +19,13 @@ const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(crea
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
-      <Switch>
-        <Route path="/register" component={Register} />
-        <Route path="/item-detail/:id" component={ItemDetail} />
-        <Route path="/" component={App} />
-      </Switch>
+      <AuthContainer>
+        <Switch>
+          <Route path="/register" component={Register} />
+          <Route path="/item-detail/:id" component={ItemDetail} />
+          <Route path="/" component={App} />
+        </Switch>
+      </AuthContainer>
     </BrowserRouter>
   </Provider>
   , document.getElementById('root'));

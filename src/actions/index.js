@@ -29,6 +29,20 @@ function authrisedPostRequest(extra_params) {
   return axios(_.merge(params, extra_params));
 }
 
+export function configAndInitialize() {
+  return function (dispatch) {
+
+    const token = localStorage.getItem('access_token');
+    const userId = JSON.parse(atob(_.split(token, '.')[1])).id;
+    const url = API_URL.USER_BASE + `/${userId}`;
+
+    return axios.get(url)
+    .then((response) => {
+      dispatch(receiveLogin(response.data))
+    })
+  }
+}
+
 export function commentPost(data) {
   const url = API_URL.POST_BASE + `/${data.id}/comments`;
   const request = authrisedPostRequest({
