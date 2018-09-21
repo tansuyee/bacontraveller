@@ -1,4 +1,5 @@
 const Follow = require('../models').Follow;
+const User = require('../models').User;
 
 module.exports = {
   create(req, res) {
@@ -7,12 +8,23 @@ module.exports = {
         message: 'You cannot follow yourself',
       });
     }
-    return Follow
-      .create({
-        target_id: req.params.userId,
-        follower_id: req.user.id,
+    User
+      .findById(req.params.userId)
+      .then(user => {
+        if (!user) {
+          return res.status(404).send({
+            message: 'User Not Found',
+          });
+        }
+        return Follow
+          .create({
+            target_id: req.params.userId,
+            follower_id: req.user.id,
+          })
+          .then(follow => {
+            res.status(201).send(user)
+          })
       })
-      .then(follow => res.status(201).send())
       .catch(error => res.status(400).send(error));
   },
   destroy(req, res) {
