@@ -10,6 +10,7 @@ import {
   LOGOUT,
   POST_GET_ALL,
   POST_GET,
+  POST_CREATE,
   POST_ACCEPT,
   POST_COMMENT,
   USER_GET
@@ -74,6 +75,16 @@ export function acceptPost(id) {
   });
 
   return {type: POST_ACCEPT, payload: request};
+}
+
+export function createPost(data) {
+  const url = API_URL.POST_BASE;
+  const request = authrisedPostRequest({
+    url,
+    data
+  });
+
+  return {type: POST_CREATE, payload: request}
 }
 
 export function getPost(id) {

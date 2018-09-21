@@ -12,6 +12,7 @@ import AuthContainer from './components/AuthContainer';
 import Register from './components/Register';
 import ItemDetail from './components/ItemDetail';
 import UserView from './components/UserView';
+import CreateRequest from './components/CreateRequest';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
@@ -25,6 +26,7 @@ ReactDOM.render(
           <Route path="/register" component={Register} />
           <Route path="/item-detail/:id" component={ItemDetail} />
           <Route path="/user/:id" component={UserView} />
+          <Route path='/create-request' component={CreateRequest} />
           <Route path="/" component={App} />
         </Switch>
       </BrowserRouter>

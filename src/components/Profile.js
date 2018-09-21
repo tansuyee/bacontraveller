@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Grid, Header, Card, Image, Statistic, Item, Loader, Button, Confirm } from 'semantic-ui-react';
 import styles from '../static/css/Profile.module.css';
 import moment from 'moment';
+import { getCountryName } from '../helper';
 
 class Profile extends Component {
 
@@ -26,14 +27,15 @@ class Profile extends Component {
   close = () => this.setState({ open: false })
 
   renderItem(item, isRequest) {
+    if (!isRequest) item = item.Post;
     return(
       <Item key={item.id}>
         <Item.Image size='tiny' src={item.item_image_url} />
 
         <Item.Content verticalAlign='middle'>
           <Item.Header as={Link} to={`item-detail/${item.id}`}>{item.item_name}</Item.Header>
-          <Item.Meta>From {item.country_from}</Item.Meta>
-          { item.transactions.length !== 0 &&
+          <Item.Meta>From {getCountryName(item.country_from)}</Item.Meta>
+          { (isRequest && item.transactions.length !== 0) &&
             <Item.Description>
               {item.transactions.length} transactions
             </Item.Description>

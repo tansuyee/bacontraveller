@@ -6,3 +6,11 @@
     background-color: #3b8686 !important;
     color: white !important;
 }
+
+.back {
+  position: absolute;
+  z-index: 10000;
+  padding-top: 30px;
+  padding-left: 35px;
+  color: white !important;
+}

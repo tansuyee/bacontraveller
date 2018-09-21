@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Header, Card, Image, Statistic, Icon, Item, Loader, Button, Confirm } from 'semantic-ui-react';
+import { Grid, Header, Card, Image, Statistic, Icon, Item, Loader } from 'semantic-ui-react';
 import styles from '../static/css/UserView.module.css';
 import moment from 'moment';
 

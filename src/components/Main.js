@@ -4,7 +4,6 @@ import Home from '../Home';
 import Profile from './Profile';
 import CountryListing from './CountryListing';
 import ItemListing from './ItemListing';
-import CreateRequest from '../CreateRequest';
 
 const Main = () => (
   <main>
@@ -13,7 +12,6 @@ const Main = () => (
       <Route path='/profile' component={Profile}/>
       <Route path="/country-listing" component={CountryListing} />
       <Route path="/item-listing/:country" component={ItemListing} />
-      <Route path='/create-request' component={CreateRequest} />
     </Switch>
   </main>
 )

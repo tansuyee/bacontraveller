@@ -4,6 +4,7 @@ import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Grid, Header, Divider, Button, Card } from 'semantic-ui-react';
 import styles from '../static/css/CountryListing.module.css';
+import { getCountryName } from '../helper';
 
 class CountryListing extends Component {
 
@@ -27,7 +28,7 @@ class CountryListing extends Component {
         <Grid.Row>
           <Grid.Column width={10}>
             <Header as='h2'>
-              <span>{country}</span>
+              <span>{getCountryName(country)}</span>
               <Header.Subheader className={styles.countryMeta}>{posts.length} Posts</Header.Subheader>
             </Header>
           </Grid.Column>

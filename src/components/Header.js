@@ -42,7 +42,9 @@ class Header extends React.Component {
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
                 <Transition visible={isFabVisible} animation='scale' duration={500}>
-                    <Button className={styles.fab} icon='plus' size='huge' circular/>
+                    <Button className={styles.fab} icon='plus' size='huge' circular
+                      onClick={() => this.props.history.push("/create-request")}
+                    />
                 </Transition>
             </div>
         )

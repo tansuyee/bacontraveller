@@ -8,6 +8,7 @@ export const LOGOUT = 'logout';
 
 export const POST_GET_ALL = 'post_get_all';
 export const POST_GET = 'post_get';
+export const POST_CREATE = 'post_create';
 export const POST_ACCEPT = 'post_accept';
 export const POST_COMMENT = 'post_comment';
 
