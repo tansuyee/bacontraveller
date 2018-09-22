@@ -2,9 +2,11 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { Grid, Icon, Header, Card, Image, Statistic, Feed, Loader } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Grid, Header, Card, Image, Statistic, Item, Loader, Button, Confirm } from 'semantic-ui-react';
 import styles from '../static/css/Profile.module.css';
 import moment from 'moment';
+import { getCountryName } from '../helper';
 
 class Profile extends Component {
 
@@ -15,62 +17,56 @@ class Profile extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn) {
+    if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn && this.props.auth.isLoggedIn) {
       this.props.getUser(this.props.auth.login.user.id);
     }
   }
 
-  renderItem(item) {
+  state = { open: false }
+  open = () => this.setState({ open: true })
+  close = () => this.setState({ open: false })
+
+  renderItem(item, isRequest) {
+    if (!isRequest) item = item.Post;
     return(
-      <Feed.Event key={item.id}>
-          <Feed.Label>
-              <img alt='' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-          </Feed.Label>
-          <Feed.Content>
-              <Feed.Summary>
-                  <Feed.User>Elliot Fu</Feed.User> added you as a friend
-                  <Feed.Date>1 Hour Ago</Feed.Date>
-              </Feed.Summary>
-              <Feed.Extra images>
-                  <a>
-                      <img src='https://react.semantic-ui.com/images/wireframe/image.png' />
-                  </a>
-                  <a>
-                      <img src='https://react.semantic-ui.com/images/wireframe/image.png' />
-                  </a>
-              </Feed.Extra>
-              <Feed.Meta>
-                  <Feed.Like>
-                      <Icon name='like' />
-                      4 Likes
-                  </Feed.Like>
-              </Feed.Meta>
-          </Feed.Content>
-      </Feed.Event>
+      <Item key={item.id}>
+        <Item.Image size='tiny' src={item.item_image_url} />
+
+        <Item.Content verticalAlign='middle'>
+          <Item.Header as={Link} to={`item-detail/${item.id}`}>{item.item_name}</Item.Header>
+          <Item.Meta>From {getCountryName(item.country_from)}</Item.Meta>
+          { (isRequest && item.transactions.length !== 0) &&
+            <Item.Description>
+              {item.transactions.length} transactions
+            </Item.Description>
+          }
+          <Item.Extra>{moment(item.createdAt).fromNow()}</Item.Extra>
+        </Item.Content>
+      </Item>
     );
   }
 
-  renderRequestsOrOfferings(buy, isRequest) {
+  renderRequestsOrOfferings(list, isRequest) {
     return (
       <Grid container>
           <Grid.Row>
             <Grid.Column>
               <Header className={styles.plannedTripTitle}>
-                { isRequest? 'Requests' : 'Offerings' } ({buy.length})
+                { isRequest? 'Requests' : 'Offerings' } ({list.length})
               </Header>
-              { !buy.length &&
+              { !list.length &&
                 <p className={styles.titleSubheader}>There is no { isRequest? 'requests' : 'offerings' }.</p>
               }
             </Grid.Column>
           </Grid.Row>
-          { buy.length !== 0 &&
+          { list.length !== 0 &&
             <Grid.Row>
               <Grid.Column>
-                <Feed className={styles.plannedTripContent}>
-                  {_.orderBy(buy, 'createdAt', 'desc').map((item) => {
-                    return this.renderItem(item);
+                <Item.Group className={styles.plannedTripContent} unstackable divided>
+                  {_.orderBy(list, 'createdAt', 'desc').map((item) => {
+                    return this.renderItem(item, isRequest);
                   })}
-                </Feed>
+                </Item.Group>
               </Grid.Column>
             </Grid.Row>
           }
@@ -80,11 +76,6 @@ class Profile extends Component {
 
   render() {
     console.log(this.props);
-    if (_.isEmpty(this.props.users)) {
-      return (
-        <Loader />
-      );
-    }
     if (!this.props.auth.isLoggedIn) {
       return (
         <div className={styles.notLoggedIn}>
@@ -101,7 +92,19 @@ class Profile extends Component {
       )
     }
 
+    if (_.isEmpty(this.props.users)) {
+      return (
+        <Loader />
+      );
+    }
+
     const currUser = this.props.users[this.props.auth.login.user.id];
+
+    if (!currUser) {
+      return (
+        <Loader />
+      );
+    }
 
     const userStats = [
         { key: 'dealClosed', label: 'Deal Closed', value: currUser.deals_closed_count },
@@ -115,6 +118,7 @@ class Profile extends Component {
             <Grid.Column>
               <Header className={styles.title} as='h1'>
                 <span>Profile</span>
+                <Button className={styles.edit} floated='right' size='mini'>Edit</Button>
               </Header>
             </Grid.Column>
           </Grid.Row>
@@ -145,11 +149,17 @@ class Profile extends Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-              <div className={styles.subContainer}>
-                {this.renderRequestsOrOfferings(currUser.buy, true)}
-                {this.renderRequestsOrOfferings(currUser.sell, false)}
-              </div>
-          </div>
+        <div className={styles.subContainer}>
+          {this.renderRequestsOrOfferings(currUser.posts_buy, true)}
+          {this.renderRequestsOrOfferings(currUser.transactions_sell, false)}
+        </div>
+        <Button color='red' fluid onClick={this.open}>Log out</Button>
+        <Confirm
+          confirmButton="YES"
+          open={this.state.open}
+          onCancel={this.close}
+          onConfirm={() => {this.props.logOut(); this.close();}} />
+        </div>
       )
   }
 }

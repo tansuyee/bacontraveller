@@ -4,7 +4,11 @@ import Main from './components/Main';
 
 const App = (props) => (
   <div>
-    <Header path={props.location.pathname} content={<Main />} />
+    <Header
+      history={props.history}
+      path={props.location.pathname}
+      content={<Main />}
+    />
   </div>
 )
 

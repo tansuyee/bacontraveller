@@ -24,7 +24,6 @@ class Header extends React.Component {
                       <Menu.Item name='Register' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
                       <Menu.Item name='Profile' active={this.props.path === "/profile"} as={Link} to="/profile" onClick={this.onSidebarHidden} />
                       <Menu.Item name='Country Listing' active={this.props.path === "/country-listing"} as={Link} to="/country-listing" onClick={this.onSidebarHidden} />
-                      <Menu.Item name='Create Request' active={this.props.path === "/create-request"} as={Link} to="/create-request" onClick={this.onSidebarHidden} />
                     </Sidebar>
 
                     <Sidebar.Pusher>
@@ -42,7 +41,9 @@ class Header extends React.Component {
                     </Sidebar.Pusher>
                 </Sidebar.Pushable>
                 <Transition visible={isFabVisible} animation='scale' duration={500}>
-                    <Button className={styles.fab} icon='plus' size='huge' circular/>
+                    <Button className={styles.fab} icon='plus' size='huge' circular
+                      onClick={() => this.props.history.push("/create-request")}
+                    />
                 </Transition>
             </div>
         )
