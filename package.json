@@ -7,8 +7,6 @@
     "moment": "^2.22.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
-    "react-mfb": "^0.6.0",
-    "react-mui-speeddial": "^0.0.6",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.0.0-next.a671462c",

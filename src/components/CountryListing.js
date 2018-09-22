@@ -28,7 +28,8 @@ class CountryListing extends Component {
         <Grid.Row>
           <Grid.Column width={10}>
             <Header as='h2'>
-              <span>{getCountryName(country)}</span>
+              {/*<span>{getCountryName(country)}</span>*/}
+              <span>Singapore</span>
               <Header.Subheader className={styles.countryMeta}>{posts.length} Posts</Header.Subheader>
             </Header>
           </Grid.Column>

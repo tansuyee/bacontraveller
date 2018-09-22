@@ -68,3 +68,8 @@
   background-color: white !important;
   border-radius: 25px !important;
 }
+
+.menu * {
+  color: red !important;
+}
+
