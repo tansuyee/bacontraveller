@@ -8,7 +8,7 @@
     width: 100%;
     height: 100%;
     z-index: 9999;
-    background-image: url('./assets/item-listing/background.png');
+    background-image: url('../../assets/item-listing/background.png');
     background-size: auto 50%;
     background-repeat: no-repeat;
     background-position-x: center;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Grid, Header, Form, Divider, Input, Image, Button, Container} from 'semantic-ui-react';
-import styles from './OfferToHelp.module.css';
+import styles from '../static/css/OfferToHelp.module.css';
 
 const paymentOptions = [
     { key: 'PayPal', text: 'PayPal', value: 'PayPal' },

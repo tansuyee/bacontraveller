@@ -6,7 +6,18 @@
   z-index: 9999;
   padding-top: 75px;
   background-size: auto 40% !important;
-  background-image: url('./assets/profile/background.png') !important;
+  background-image: url('../../assets/profile/background.png') !important;
+}
+
+.notLoggedIn {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  padding-top: 75px;
+  background-size: cover !important;
+  background-image: url('../../assets/profile/background.png') !important;
 }
 
 .menu, .search{
@@ -40,6 +51,7 @@
   background-color: #252525;
   height: 100%;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 .plannedTripTitle{
@@ -51,3 +63,13 @@
 .plannedTripContent *{
   color: white !important;
 }
+
+.edit {
+  background-color: white !important;
+  border-radius: 25px !important;
+}
+
+.menu * {
+  color: red !important;
+}
+
