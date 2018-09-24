@@ -2,7 +2,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  /*height: 100vh;*/
   z-index: 9999;
   background-image: url('../../assets/register/background.png');
   background-size: cover;
@@ -13,6 +13,37 @@
   color: white;
 }
 
-.title {
+.title{
+  margin-top: 25px !important;
+}
+
+.titleBacon{
+  font-weight: bold !important;
   color: white !important;
+  font-size: 32pt !important;
+  font-family: Arial;
+  text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.titleTraveller{
+  color: white !important;
+  font-size: 32pt !important;
+  font-family: Arial;
+  font-weight: 100;
+  text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.titleSubheader {
+  color: white !important;
+  font-size: 12pt !important;
+  font-family: Arial;
+  text-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+}
+
+.featured{
+  color: white !important;
+}
+
+.itemAuthor, .itemTitle{
+  color: #3b8686 !important;
 }
