@@ -14,6 +14,7 @@ import ItemDetail from './components/ItemDetail';
 import UserView from './components/UserView';
 import CreateRequest from './components/CreateRequest';
 import reducers from './reducers';
+import withTracker from 'withTracker';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
 
@@ -23,11 +24,11 @@ ReactDOM.render(
     <AuthContainer>
       <BrowserRouter>
         <Switch>
-          <Route path="/register" component={Register} />
-          <Route path="/item-detail/:id" component={ItemDetail} />
-          <Route path="/user/:id" component={UserView} />
-          <Route path='/create-request' component={CreateRequest} />
-          <Route path="/" component={App} />
+          <Route path="/register" component={withTracker(Register)} />
+          <Route path="/item-detail/:id" component={withTracker(ItemDetail)} />
+          <Route path="/user/:id" component={withTracker(UserView)} />
+          <Route path='/create-request' component={withTracker(CreateRequest)} />
+          <Route path="/" component={withTracker(App)} />
         </Switch>
       </BrowserRouter>
     </AuthContainer>
