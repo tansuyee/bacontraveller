@@ -14,7 +14,7 @@ import ItemDetail from './components/ItemDetail';
 import UserView from './components/UserView';
 import CreateRequest from './components/CreateRequest';
 import reducers from './reducers';
-import withTracker from 'withTracker';
+import withTracker from './withTracker';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
 
