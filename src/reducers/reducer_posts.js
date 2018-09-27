@@ -5,6 +5,7 @@ import {
   POST_CREATE,
   POST_COMMENT,
   EDIT_COMMENT,
+  DELETE_COMMENT,
 } from '../actions/types';
 
 export default function (state = [], action) {
@@ -13,6 +14,7 @@ export default function (state = [], action) {
     case POST_CREATE:
     case POST_COMMENT:
     case EDIT_COMMENT:
+    case DELETE_COMMENT:
       const post = action.payload.data;
       return _.extend({}, state, {[post.id]: post});
     case POST_GET_ALL:

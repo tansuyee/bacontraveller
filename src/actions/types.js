@@ -12,6 +12,7 @@ export const POST_CREATE = 'post_create';
 export const POST_ACCEPT = 'post_accept';
 export const POST_COMMENT = 'post_comment';
 export const EDIT_COMMENT = 'edit_comment';
+export const DELETE_COMMENT = 'delete_comment';
 
 export const USER_GET = 'user_get';
 export const USER_EDIT = 'user_edit';

@@ -14,6 +14,7 @@ import {
   POST_ACCEPT,
   POST_COMMENT,
   EDIT_COMMENT,
+  DELETE_COMMENT,
   USER_GET,
   USER_EDIT,
   USER_FOLLOW,
@@ -100,6 +101,16 @@ export function editComment(data) {
   });
 
   return {type: EDIT_COMMENT, payload: request};
+}
+
+export function deleteComment(data) {
+  const url = API_URL.POST_BASE + `/${data.id}/comments/${data.commentId}`;
+  const request = authorisedRequest({
+    url,
+    method: 'delete'
+  });
+  
+  return {type: DELETE_COMMENT, payload: request};
 }
 
 export function commentPost(data) {
