@@ -109,7 +109,6 @@ const self = module.exports = {
       .catch(error => res.status(400).send(error));
   },
   search(req, res) {
-    console.log(req.params.item_name)
     let condition = { where: {
       $or: [
         {'item_name': { like: '%' + req.query.item_name + '%' }},
