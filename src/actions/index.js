@@ -127,6 +127,19 @@ export function commentPost(data) {
   return {type: POST_COMMENT, payload: request};
 }
 
+export function completePost(id) {
+  const url = API_URL.POST_BASE + `/${id}`;
+  const request = authorisedRequest({
+    url,
+    method: 'put',
+    data: {
+      status: 'COMPLETED'
+    }
+  });
+
+  return {type: POST_EDIT, payload: request};
+}
+
 export function acceptPost(id) {
   const url = API_URL.POST_BASE + `/${id}/accept`;
   const request = authorisedPostRequest({

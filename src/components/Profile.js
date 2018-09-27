@@ -43,15 +43,23 @@ class Profile extends Component {
               {item.transactions.length} transactions
             </Item.Description>
           }
+          <Item.Extra>Status: {item.status}</Item.Extra>
           <Item.Extra>{moment(item.createdAt).fromNow()}</Item.Extra>
-          <Item.Extra>
-          <Button className={styles.deletePost} floated='right' size='mini'
-            onClick={() => this.props.deletePost(item.id)}
-          >Delete</Button>
-            <Button className={styles.editPost} floated='right' size='mini'
-              onClick={() => this.props.history.push(`/post-edit/${item.id}`)}
-            >Edit</Button>
-          </Item.Extra>
+          { isRequest &&
+            <Item.Extra>
+              <Button className={styles.deletePost} floated='right' size='mini'
+                onClick={() => this.props.deletePost(item.id)}
+              >Delete</Button>
+              <Button className={styles.editPost} floated='right' size='mini'
+                onClick={() => this.props.history.push(`/post-edit/${item.id}`)}
+              >Edit</Button>
+              { item.status === "ACCEPTED" &&
+                <Button className={styles.completePost} floated='right' size='mini'
+                  onClick={() => this.props.completePost(item.id)}
+                >Mark as Completed</Button>
+              }
+            </Item.Extra>
+          }
         </Item.Content>
       </Item>
     );

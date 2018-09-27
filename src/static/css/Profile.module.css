@@ -81,6 +81,12 @@
   border-radius: 25px !important;
 }
 
+.completePost {
+  color: white !important;
+  background-color: green !important;
+  border-radius: 25px !important;
+}
+
 .menu * {
   color: red !important;
 }
