@@ -69,7 +69,18 @@
   border-radius: 25px !important;
 }
 
+.editPost {
+  color: black !important;
+  background-color: white !important;
+  border-radius: 25px !important;
+}
+
+.deletePost {
+  color: white !important;
+  background-color: red !important;
+  border-radius: 25px !important;
+}
+
 .menu * {
   color: red !important;
 }
-

@@ -20,6 +20,9 @@ class Profile extends Component {
     if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn && this.props.auth.isLoggedIn) {
       this.props.getUser(this.props.auth.login.user.id);
     }
+    else if (this.props.posts !== prevProps.posts) {
+      this.props.getUser(this.props.auth.login.user.id);
+    }
   }
 
   state = { open: false }
@@ -41,6 +44,14 @@ class Profile extends Component {
             </Item.Description>
           }
           <Item.Extra>{moment(item.createdAt).fromNow()}</Item.Extra>
+          <Item.Extra>
+          <Button className={styles.deletePost} floated='right' size='mini'
+            onClick={() => this.props.deletePost(item.id)}
+          >Delete</Button>
+            <Button className={styles.editPost} floated='right' size='mini'
+              onClick={() => this.props.history.push(`/post-edit/${item.id}`)}
+            >Edit</Button>
+          </Item.Extra>
         </Item.Content>
       </Item>
     );
