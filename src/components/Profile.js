@@ -34,8 +34,7 @@ class Profile extends Component {
 
         <Item.Content verticalAlign='middle'>
           <Item.Header as={Link} to={`item-detail/${item.id}`}>{item.item_name}</Item.Header>
-          {/*<Item.Meta>From {getCountryName(item.country_from)}</Item.Meta>*/}
-          <Item.Meta>From Singapore</Item.Meta>
+          <Item.Meta>From {getCountryName(item.country_from)}</Item.Meta>
           { (isRequest && item.transactions.length !== 0) &&
             <Item.Description>
               {item.transactions.length} transactions
@@ -156,14 +155,8 @@ class Profile extends Component {
           {this.renderRequestsOrOfferings(currUser.posts_buy, true)}
           {this.renderRequestsOrOfferings(currUser.transactions_sell, false)}
         </div>
-        <Button color='red' fluid onClick={this.open}>Log out</Button>
-        <Confirm
-          confirmButton="YES"
-          open={this.state.open}
-          onCancel={this.close}
-          onConfirm={() => {this.props.logOut(); this.close();}} />
-        </div>
-      )
+      </div>
+    )
   }
 }
 

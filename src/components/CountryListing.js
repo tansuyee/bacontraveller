@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Grid, Header, Divider, Button, Card } from 'semantic-ui-react';
 import styles from '../static/css/CountryListing.module.css';
 import { getCountryName } from '../helper';
@@ -14,7 +15,7 @@ class CountryListing extends Component {
 
   renderItem(item, index) {
     return (
-      <Card key={index} image={item.item_image_url} />
+      <Card key={index} image={item.item_image_url} as={Link} to={`/item-detail/${item.id}`} />
     );
   }
 
@@ -28,8 +29,7 @@ class CountryListing extends Component {
         <Grid.Row>
           <Grid.Column width={10}>
             <Header as='h2'>
-              {/*<span>{getCountryName(country)}</span>*/}
-              <span>Singapore</span>
+              <span>{getCountryName(country)}</span>
               <Header.Subheader className={styles.countryMeta}>{posts.length} Posts</Header.Subheader>
             </Header>
           </Grid.Column>

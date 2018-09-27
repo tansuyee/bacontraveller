@@ -8,6 +8,7 @@ import styles from '../static/css/ItemDetail.module.css';
 import moment from 'moment';
 import CommentModal from './CommentModal';
 import AddButton from './AddButton';
+import { getCountryName } from '../helper';
 
 class ItemDetail extends Component {
 
@@ -27,7 +28,7 @@ class ItemDetail extends Component {
   }
 
   renderComment(comment) {
-    let currUserId = this.props.auth.login.user.id;
+    let currUserId = this.props.auth.isLoggedIn ? this.props.auth.login.user.id : null;
     return (
       <Comment key={comment.id}>
         <Comment.Avatar as={Image} src={'https://randomuser.me/api/portraits/women/40.jpg'} circular />
@@ -46,8 +47,11 @@ class ItemDetail extends Component {
             }
             </Comment.Action>
             <Comment.Action>
-            <Icon name='delete' size='small' />
-            <span>Delete</span>
+            { comment.author_id === currUserId &&
+              <span>
+                <Icon name='delete' size='small' />
+              Delete</span>
+            }
             </Comment.Action>
           </Comment.Actions>
         </Comment.Content>
@@ -65,7 +69,7 @@ class ItemDetail extends Component {
     console.log(this.props);
     const post = this.props.posts[this.props.match.params.id];
 
-    if (_.isEmpty(post) || _.isEmpty(this.props.auth.login)) return (<Loader />);
+    if (_.isEmpty(post)) return (<Loader />);
 
     return (
       <div className={styles.container}>
@@ -96,16 +100,18 @@ class ItemDetail extends Component {
                   <Icon className={styles.descriptionExpand} name='angle double down' />
                 </Divider>
                 <Header className={styles.dealDetails}>
-                  <Button className={styles.offerToHelp} floated='right' size='mini'
-                    onClick={this.open}>OFFER TO HELP</Button>
+                  { this.props.auth.isLoggedIn &&
+                    <Button className={styles.offerToHelp} floated='right' size='mini'
+                      onClick={this.open}>OFFER TO HELP</Button>
+                  }
                   <Confirm open={this.state.open} onCancel={this.close} onConfirm={() => {this.props.acceptPost(post.id); this.close();}} />
                   <span>Willing to pay </span>
                   <span className={styles.amount}>{post.price}</span>
                   <Header.Subheader>
                     <span>Buy from </span>
-                    <span className={styles.dealLocation}>{post.country_from}</span>
+                    <span className={styles.dealLocation}>{getCountryName(post.country_from)}</span>
                     <span>, deal in </span>
-                    <span className={styles.dealLocation}>{post.country_to}</span>
+                    <span className={styles.dealLocation}>{getCountryName(post.country_to)}</span>
                   </Header.Subheader>
               </Header>
             </Grid.Column>
@@ -114,7 +120,9 @@ class ItemDetail extends Component {
             <Grid.Column>
               <Header className={styles.commentSection}>
                 Comments
-                <CommentModal edit={false} initialMessage='' postId={post.id} styling={styles} />
+                { this.props.auth.isLoggedIn &&
+                  <CommentModal edit={false} initialMessage='' postId={post.id} styling={styles} />
+                }
               </Header>
               <Divider fitted />
             </Grid.Column>

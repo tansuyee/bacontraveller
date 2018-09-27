@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Grid, Icon, Menu, Sidebar, Button, Transition, Image } from 'semantic-ui-react';
+import { Confirm, Grid, Icon, Menu, Sidebar, Button, Transition, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
@@ -20,13 +20,15 @@ class Header extends React.Component {
       }
     }
 
+    open = () => this.setState({ open: true })
+    close = () => this.setState({ open: false })
     onClickMenu = () => this.setState({ isSidebarVisible: !this.state.isSidebarVisible, isFabVisible: false })
     onSidebarHidden = () => this.setState({ isSidebarVisible: false, isFabVisible: true })
 
     renderSidebarTop() {
       const { isLoggedIn } = this.props.auth;
 
-      if (!isLoggedIn || _.isEmpty(this.props.users)) {
+      if (!isLoggedIn || _.isEmpty(this.props.users) || _.isEmpty(this.props.users[this.props.auth.login.user.id])) {
         return (
           <div className={styles.sidebarTop}>
               <Image src='https://randomuser.me/api/portraits/women/8.jpg' bordered/>
@@ -52,12 +54,19 @@ class Header extends React.Component {
                 <Sidebar.Pushable className={styles.pushable}>
                     <Sidebar as={Menu} animation='push' visible={isSidebarVisible} width='thin' onHide={this.onSidebarHidden} style={{ width: 260 }} inverted vertical>
                         { this.renderSidebarTop() }
-                        { !this.props.auth.isLoggedIn &&
-                          <Menu.Item name='Sign In' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
-                        }
+
                         <Menu.Item name='home' active={this.props.path === "/"} as={Link} to="/" onClick={this.onSidebarHidden} />
                         <Menu.Item name='Profile' active={this.props.path === "/profile"} as={Link} to="/profile" onClick={this.onSidebarHidden} />
                         <Menu.Item name='Country Listing' active={this.props.path === "/country-listing"} as={Link} to="/country-listing" onClick={this.onSidebarHidden} />
+                        { this.props.auth.isLoggedIn ?
+                          <Button color='red' fluid onClick={this.open}>Log out</Button> :
+                          <Menu.Item name='Sign In' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
+                        }
+                        <Confirm
+                          confirmButton="YES"
+                          open={this.state.open}
+                          onCancel={this.close}
+                          onConfirm={() => {this.props.logOut(); this.close();}} />
                     </Sidebar>
 
                     <Sidebar.Pusher>
