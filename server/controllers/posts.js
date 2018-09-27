@@ -3,7 +3,7 @@ const Transaction = require('../models').Transaction;
 const Comment = require('../models').Comment;
 const User = require('../models').User;
 
-module.exports = {
+const self = module.exports = {
   create(req, res) {
     return Post
       .create({
@@ -15,40 +15,28 @@ module.exports = {
         country_from: req.body.country_from,
         country_to: req.body.country_to,
       })
-      .then(post => res.status(201).send())
+      .then((post) => {
+          Post.findById(post.id, self.fullAttributes())
+          .then(post => {
+            if (!post) {
+              return res.status(404).send({
+                message: 'Post Not Found',
+              });
+            }
+            res.status(200).send(post)
+          })
+        })
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
     return Post
-      .findAll({
-        include: [{
-          model: Transaction,
-          as: 'transactions',
-        },{
-          model: Comment,
-          as: 'comments',
-        },{
-          model: User,
-          attributes: ["id", "username", "image_url"]
-        }],
-      })
+      .findAll(self.fullAttributes())
       .then(posts => res.status(200).send(posts))
       .catch(error => res.status(400).send(error));
   },
   retrieve(req, res) {
     return Post
-      .findById(req.params.postId, {
-        include: [{
-          model: Transaction,
-          as: 'transactions',
-        },{
-          model: Comment,
-          as: 'comments',
-        },{
-          model: User,
-          attributes: ["id", "username", "image_url"]
-        }],
-      })
+      .findById(req.params.postId, self.fullAttributes())
       .then(post => {
         if (!post) {
           return res.status(404).send({
@@ -83,7 +71,17 @@ module.exports = {
           country_from: req.body.country_from || post.country_from,
           country_to: req.body.country_to || post.country_to,
         })
-        .then(() => res.status(200).send(post))
+        .then(() => {
+          Post.findById(req.params.postId, self.fullAttributes())
+          .then(post => {
+            if (!post) {
+              return res.status(404).send({
+                message: 'Post Not Found',
+              });
+            }
+            res.status(200).send(post)
+          })
+        })
         .catch((error) => res.status(400).send(error));
     })
     .catch(error => res.status(400).send(error));
@@ -131,5 +129,19 @@ module.exports = {
           .then(transaction => res.status(201).send())
           .catch(error => res.status(400).send(error));
         });
+    },
+    fullAttributes: function() {
+      return {
+        include: [{
+          model: Transaction,
+          as: 'transactions',
+        },{
+          model: Comment,
+          as: 'comments',
+        },{
+          model: User,
+          attributes: ["id", "username", "image_url"]
+        }],
+      }
     }
 };
