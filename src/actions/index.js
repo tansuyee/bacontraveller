@@ -14,6 +14,7 @@ import {
   POST_ACCEPT,
   POST_COMMENT,
   USER_GET,
+  USER_EDIT,
   USER_FOLLOW,
   USER_UNFOLLOW
 } from './types';
@@ -52,6 +53,19 @@ export function unfollowUser(id) {
 
   return {type: USER_UNFOLLOW, payload: request};
 }
+
+export function editUser(id, data) {
+  const url = API_URL.USER_BASE + `/${id}`;
+  const request = axios({
+    url,
+    method: 'put',
+    data,
+    headers: {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+  })
+
+  return {type: USER_EDIT, payload: request};
+}
+
 
 export function getUser(id) {
   const url = API_URL.USER_BASE + `/${id}`;

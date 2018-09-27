@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { Grid, Icon, Menu, Sidebar, Button, Transition, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -13,13 +14,19 @@ class Header extends React.Component {
         this.onClickMenu = this.onClickMenu.bind(this)
     }
 
+    componentDidUpdate(prevProps) {
+      if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn && this.props.auth.isLoggedIn) {
+        this.props.getUser(this.props.auth.login.user.id);
+      }
+    }
+
     onClickMenu = () => this.setState({ isSidebarVisible: !this.state.isSidebarVisible, isFabVisible: false })
     onSidebarHidden = () => this.setState({ isSidebarVisible: false, isFabVisible: true })
 
     renderSidebarTop() {
       const { isLoggedIn } = this.props.auth;
 
-      if (!isLoggedIn) {
+      if (!isLoggedIn || _.isEmpty(this.props.users)) {
         return (
           <div className={styles.sidebarTop}>
               <Image src='https://randomuser.me/api/portraits/women/8.jpg' bordered/>
@@ -28,11 +35,11 @@ class Header extends React.Component {
         )
       }
 
-      let user = this.props.auth.login.user;
+      let user = this.props.users[this.props.auth.login.user.id];
 
       return (
         <div className={styles.sidebarTop}>
-            <Image src={user.image_url} bordered/>
+            <Image src={user.image_url ? user.image_url : 'https://randomuser.me/api/portraits/women/8.jpg'} bordered/>
             <h2 className={styles.sidebarUsername}>{user.username}</h2>
         </div>
       );
@@ -80,7 +87,8 @@ class Header extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    users: state.users
   };
 }
 

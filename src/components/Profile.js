@@ -119,7 +119,9 @@ class Profile extends Component {
             <Grid.Column>
               <Header className={styles.title} as='h1'>
                 <span>Profile</span>
-                <Button className={styles.edit} floated='right' size='mini'>Edit</Button>
+                <Button className={styles.edit} floated='right' size='mini'
+                  onClick={() => this.props.history.push(`/user-edit/${currUser.id}`)}
+                >Edit</Button>
               </Header>
             </Grid.Column>
           </Grid.Row>
