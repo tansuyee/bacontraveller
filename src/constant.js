@@ -1,4 +1,6 @@
-const ROOT_API = window.location.protocol + "//" + window.location.hostname + ":8000";
+
+const hostname = window.location.hostname === "localhost" ? window.location.hostname + ":8000" : "api." + window.location.hostname;
+const ROOT_API = window.location.protocol + "//" + hostname;
 
 export const API_URL = {
   LOGIN: `${ROOT_API}/v1/login`,
