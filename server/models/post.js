@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     price: DataTypes.STRING,
     country_from: DataTypes.STRING,
-    country_to: DataTypes.STRING
+    country_to: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {});
   Post.associate = function(models) {
     Post.belongsTo(models.User, {

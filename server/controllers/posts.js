@@ -14,6 +14,7 @@ const self = module.exports = {
         price: req.body.price,
         country_from: req.body.country_from,
         country_to: req.body.country_to,
+        status: 'PENDING'
       })
       .then((post) => {
           Post.findById(post.id, self.fullAttributes())
@@ -70,6 +71,7 @@ const self = module.exports = {
           price: req.body.price || post.price,
           country_from: req.body.country_from || post.country_from,
           country_to: req.body.country_to || post.country_to,
+          status: req.body.status || post.status
         })
         .then(() => {
           Post.findById(req.params.postId, self.fullAttributes())
@@ -139,7 +141,13 @@ const self = module.exports = {
             post_id: req.params.postId,
             status: 'PENDING'
           })
-          .then(transaction => res.status(201).send())
+          .then(transaction => { 
+            return post
+            .update({
+              status: 'ACCEPTED',
+            })
+            .then(() => res.status(201).send())
+          })
           .catch(error => res.status(400).send(error));
         });
     },
