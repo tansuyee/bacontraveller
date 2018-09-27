@@ -3,12 +3,16 @@ import {
   POST_GET_ALL,
   POST_GET,
   POST_CREATE,
+  POST_COMMENT,
+  EDIT_COMMENT,
 } from '../actions/types';
 
 export default function (state = [], action) {
   switch (action.type) {
     case POST_GET:
     case POST_CREATE:
+    case POST_COMMENT:
+    case EDIT_COMMENT:
       const post = action.payload.data;
       return _.extend({}, state, {[post.id]: post});
     case POST_GET_ALL:

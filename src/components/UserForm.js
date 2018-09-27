@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { Confirm, Grid, Icon, Form, Button, Image, Loader } from 'semantic-ui-react';
+import { Confirm, Grid, Icon, Form, Button, Loader } from 'semantic-ui-react';
 import styles from '../static/css/CreateRequest.module.css';
 
 const cloudName = 'kfwongdev';
@@ -93,7 +93,7 @@ class UserForm extends Component {
                       <label>Upload New Profile Image<Button className={styles.browseButton} size='mini' floated='right' onClick={() => this.imageFileRef.current.click()}>BROWSE</Button></label>
                       <br/>
                       <input className={styles.imageFile} ref={this.imageFileRef} onChange={this.handleBrowse} type='file' accept='image/*'/>
-                      <img className={styles.uploadImage} ref={this.imagePreviewRef} src={user.image_url}/>
+                      <img alt='' className={styles.uploadImage} ref={this.imagePreviewRef} src={user.image_url}/>
                   </Form.Field>
                   <Button type='submit' onClick={() => this.open()}>Submit</Button>
                   <Confirm

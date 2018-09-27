@@ -39,7 +39,7 @@ class Header extends React.Component {
 
       return (
         <div className={styles.sidebarTop}>
-            <Image src={user.image_url ? user.image_url : 'https://randomuser.me/api/portraits/women/8.jpg'} bordered/>
+            <Image src={_.isEmpty(user.image_url) ? user.image_url : 'https://randomuser.me/api/portraits/women/8.jpg'} bordered/>
             <h2 className={styles.sidebarUsername}>{user.username}</h2>
         </div>
       );

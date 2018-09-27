@@ -27,17 +27,27 @@ class ItemDetail extends Component {
   }
 
   renderComment(comment) {
+    let currUserId = this.props.auth.login.user.id;
     return (
       <Comment key={comment.id}>
         <Comment.Avatar as={Image} src={'https://randomuser.me/api/portraits/women/40.jpg'} circular />
         <Comment.Content>
-          <Comment.Author className={styles.commentAuthorName}>Jane Doe</Comment.Author>
+          <Comment.Author className={styles.commentAuthorName}
+            onClick={() => this.props.history.push(`/user/${1}`)}
+          >Jane Doe</Comment.Author>
           <Comment.Text>{comment.text}</Comment.Text>
           <Comment.Actions className={styles.commentActions}>
             <Comment.Action>
-              <div>{moment(comment.createdAt).fromNow()}</div>
-              <Icon name='reply' size='small' />
-              <span> REPLY</span>
+              {moment(comment.createdAt).fromNow()}
+            </Comment.Action>
+            <Comment.Action>
+            { comment.author_id === currUserId &&
+              <CommentModal edit={true} initialMessage={comment.text} postId={comment.post_id} commentId={comment.id} />
+            }
+            </Comment.Action>
+            <Comment.Action>
+            <Icon name='delete' size='small' />
+            <span>Delete</span>
             </Comment.Action>
           </Comment.Actions>
         </Comment.Content>
@@ -55,10 +65,7 @@ class ItemDetail extends Component {
     console.log(this.props);
     const post = this.props.posts[this.props.match.params.id];
 
-    if (_.isEmpty(post)) console.log("hmm");
-
-    if (_.isEmpty(post)) return (<Loader />);
-
+    if (_.isEmpty(post) || _.isEmpty(this.props.auth.login)) return (<Loader />);
 
     return (
       <div className={styles.container}>
@@ -107,7 +114,7 @@ class ItemDetail extends Component {
             <Grid.Column>
               <Header className={styles.commentSection}>
                 Comments
-                <CommentModal postId={post.id} styling={styles}/>
+                <CommentModal edit={false} initialMessage='' postId={post.id} styling={styles} />
               </Header>
               <Divider fitted />
             </Grid.Column>
@@ -128,6 +135,7 @@ class ItemDetail extends Component {
 
 function mapStateToProps(state) {
   return {
+    auth: state.auth,
     posts: state.posts
   };
 }
