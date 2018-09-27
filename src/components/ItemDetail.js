@@ -48,7 +48,7 @@ class ItemDetail extends Component {
             </Comment.Action>
             <Comment.Action>
             { comment.author_id === currUserId &&
-              <span>
+              <span onClick={() => this.props.deleteComment({id:comment.post_id, commentId: comment.id})}>
                 <Icon name='delete' size='small' />
               Delete</span>
             }
