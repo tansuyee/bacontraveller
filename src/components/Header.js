@@ -23,6 +23,8 @@ class Header extends React.Component {
       }
     }
 
+    handleOpen = () => this.setState({ modalOpen: true })
+    handleClose = () => this.setState({ modalOpen: false })
     open = () => this.setState({ open: true })
     close = () => this.setState({ open: false })
     onClickMenu = () => this.setState({ isSidebarVisible: !this.state.isSidebarVisible, isFabVisible: false })
@@ -52,6 +54,7 @@ class Header extends React.Component {
 
     render() {
         const { isSidebarVisible, isFabVisible } = this.state
+        const { isLoggedIn } = this.props.auth
         return (
             <div>
                 <Sidebar.Pushable className={styles.pushable}>
@@ -89,9 +92,16 @@ class Header extends React.Component {
                 </Sidebar.Pushable>
                 <Transition visible={isFabVisible} animation='scale' duration={500}>
                     <Button className={styles.fab} icon='plus' size='huge' circular
-                        onClick={() => this.props.history.push("/create-request")}
+                        onClick={isLoggedIn ? () => this.props.history.push("/create-request"): this.handleOpen}
                     />
                 </Transition>
+                <Confirm
+                  confirmButton="Let's do it!"
+                  header="You're not signed in"
+                  content="Sign in to create post, accept offer and many more!"
+                  open={this.state.modalOpen}
+                  onCancel={this.handleClose}
+                  onConfirm={() => {this.props.history.push("/register");this.handleClose();}} />
             </div>
         )
     }

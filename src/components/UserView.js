@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Grid, Header, Card, Image, Statistic, Icon, Item, Loader } from 'semantic-ui-react';
 import styles from '../static/css/UserView.module.css';
 import moment from 'moment';
+import { getCountryName } from '../helper';
 
 class UserView extends Component {
 
@@ -14,14 +15,15 @@ class UserView extends Component {
   }
 
   renderItem(item, isRequest) {
+    if (!isRequest) item = item.Post;
     return(
       <Item key={item.id}>
         <Item.Image size='tiny' src={item.item_image_url} />
 
         <Item.Content verticalAlign='middle'>
           <Item.Header as={Link} to={`/item-detail/${item.id}`}>{item.item_name}</Item.Header>
-          <Item.Meta>From {item.country_from}</Item.Meta>
-          { item.transactions.length !== 0 &&
+          <Item.Meta>From {getCountryName(item.country_from)}</Item.Meta>
+          { (isRequest && item.transactions.length !== 0) &&
             <Item.Description>
               {item.transactions.length} transactions
             </Item.Description>
@@ -60,7 +62,31 @@ class UserView extends Component {
     );
   }
 
+  renderFollowButton(user) {
+
+    let isSelf = (user.id === this.props.auth.login.user.id);
+    let hasFollowed = _.find(user.followers, {'follower_id': this.props.auth.login.user.id});
+
+    if (!isSelf) {
+    return (
+      <span>
+      { !isSelf &&
+        hasFollowed ?
+        <Button className={styles.follow} floated='right' size='mini'
+          onClick={() => this.props.unfollowUser(user.id)}>Unfollow</Button> :
+        <Button className={styles.follow} floated='right' size='mini'
+          onClick={() => this.props.followUser(user.id)}>Follow</Button>
+      }
+      </span>
+    );
+  }
+  }
+
   render() {
+    const { isLoggedIn } = this.props.auth;
+
+
+
     if (_.isEmpty(this.props.users) || _.isEmpty(this.props.auth.login)) {
       return (
         <Loader />
@@ -80,11 +106,7 @@ class UserView extends Component {
         { key: 'followers', label: 'Followers', value: user.followers_count },
         { key: 'following', label: 'Following', value: user.following.length },
     ]
-
-    console.log(this.props.auth.login.user.id);
-    console.log(_.find(user.followers, {'follower_id': this.props.auth.login.user.id}));
-    let hasFollowed = _.find(user.followers, {'follower_id': this.props.auth.login.user.id});
-
+    
     return (
       <div>
         <Icon className={styles.back} size='big' name='arrow left' onClick={this.props.history.goBack} />
@@ -94,11 +116,8 @@ class UserView extends Component {
               <Grid.Column>
                 <Header className={styles.title} as='h1'>
                   <span>Profile</span>
-                  { hasFollowed ?
-                    <Button className={styles.follow} floated='right' size='mini'
-                      onClick={() => this.props.unfollowUser(user.id)}>Unfollow</Button> :
-                    <Button className={styles.follow} floated='right' size='mini'
-                      onClick={() => this.props.followUser(user.id)}>Follow</Button>
+                  { isLoggedIn &&
+                    this.renderFollowButton(user)
                   }
                 </Header>
               </Grid.Column>
