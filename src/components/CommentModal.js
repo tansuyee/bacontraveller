@@ -6,7 +6,7 @@ import * as actions from '../actions';
 class CommentModal extends Component {
   state = {
     modalOpen: false,
-    message: '',
+    message: this.props.initialMessage,
    }
 
   handleOpen() {
@@ -21,21 +21,32 @@ class CommentModal extends Component {
     this.setState({ message: e.target.value});
   }
 
-  handleSubmit(deal) {
+  handleSubmit() {
     if (this.state.message) {
-      this.props.commentPost({
-        id: this.props.postId,
-        text: this.state.message
-      });
+      if (this.props.edit) {
+        this.props.editComment({
+          id: this.props.postId,
+          commentId: this.props.commentId,
+          text: this.state.message
+        });
+      }
+      else {
+        this.props.commentPost({
+          id: this.props.postId,
+          text: this.state.message
+        });
+      }
     }
     this.handleClose();
-    this.setState({ message: ''});
   }
 
   render() {
     return (
       <Modal
-        trigger={
+        trigger={ this.props.edit ?
+          <span onClick={this.handleOpen.bind(this)}>
+            <Icon name='edit' size='small' />Edit
+          </span> :
           <Button className={this.props.styling.offerToHelp} floated='right' size='mini'
             onClick={this.handleOpen.bind(this)}>
             <Icon name='add'/>Add

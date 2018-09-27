@@ -13,6 +13,7 @@ import {
   POST_CREATE,
   POST_ACCEPT,
   POST_COMMENT,
+  EDIT_COMMENT,
   USER_GET,
   USER_EDIT,
   USER_FOLLOW,
@@ -20,12 +21,11 @@ import {
 } from './types';
 import { API_URL } from '../constant';
 
-function authorisedGetRequest(url) {
-  return axios.get(
-    url,
-    { headers:
-      {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
-    })
+function authorisedRequest(extra_params) {
+  let params = {
+    headers: {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+  }
+  return axios(_.merge(params, extra_params));
 }
 
 function authorisedPostRequest(extra_params) {
@@ -56,11 +56,10 @@ export function unfollowUser(id) {
 
 export function editUser(id, data) {
   const url = API_URL.USER_BASE + `/${id}`;
-  const request = axios({
+  const request = authorisedRequest({
     url,
     method: 'put',
     data,
-    headers: {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
   })
 
   return {type: USER_EDIT, payload: request};
@@ -88,6 +87,19 @@ export function configAndInitialize() {
       })
     }
   }
+}
+
+export function editComment(data) {
+  const url = API_URL.POST_BASE + `/${data.id}/comments/${data.commentId}`;
+  const request = authorisedRequest({
+    url,
+    method: 'put',
+    data: {
+      text: data.text
+    }
+  });
+
+  return {type: EDIT_COMMENT, payload: request};
 }
 
 export function commentPost(data) {
