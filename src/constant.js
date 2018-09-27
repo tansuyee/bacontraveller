@@ -10,6 +10,8 @@ export const API_URL = {
   USER_BASE: `${ROOT_API}/v1/users`,
 }
 
+export const defaultImageUrl = 'https://randomuser.me/api/portraits/women/8.jpg';
+
 export const countryOptions = [
   { key: 'sg', value: 'sg', flag: 'sg', text: 'Singapore' },
   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },

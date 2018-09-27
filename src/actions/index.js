@@ -11,6 +11,8 @@ import {
   POST_GET_ALL,
   POST_GET,
   POST_CREATE,
+  POST_EDIT,
+  POST_DELETE,
   POST_ACCEPT,
   POST_COMMENT,
   EDIT_COMMENT,
@@ -109,7 +111,7 @@ export function deleteComment(data) {
     url,
     method: 'delete'
   });
-  
+
   return {type: DELETE_COMMENT, payload: request};
 }
 
@@ -125,6 +127,19 @@ export function commentPost(data) {
   return {type: POST_COMMENT, payload: request};
 }
 
+export function completePost(id) {
+  const url = API_URL.POST_BASE + `/${id}`;
+  const request = authorisedRequest({
+    url,
+    method: 'put',
+    data: {
+      status: 'COMPLETED'
+    }
+  });
+
+  return {type: POST_EDIT, payload: request};
+}
+
 export function acceptPost(id) {
   const url = API_URL.POST_BASE + `/${id}/accept`;
   const request = authorisedPostRequest({
@@ -133,6 +148,29 @@ export function acceptPost(id) {
 
   return {type: POST_ACCEPT, payload: request};
 }
+
+export function deletePost(id) {
+  const url = API_URL.POST_BASE + `/${id}`;
+  const request = authorisedRequest({
+    url,
+    method: 'delete'
+  });
+
+  return {type: POST_DELETE, payload: request};
+}
+
+
+export function editPost(id, data) {
+  const url = API_URL.POST_BASE + `/${id}`;
+  const request = authorisedRequest({
+    url,
+    method: 'put',
+    data
+  });
+
+  return {type: POST_EDIT, payload: request};
+}
+
 
 export function createPost(data) {
   const url = API_URL.POST_BASE;

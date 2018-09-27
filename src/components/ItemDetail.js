@@ -9,6 +9,7 @@ import moment from 'moment';
 import CommentModal from './CommentModal';
 import AddButton from './AddButton';
 import { getCountryName } from '../helper';
+import { defaultImageUrl } from '../constant';
 
 class ItemDetail extends Component {
 
@@ -31,11 +32,11 @@ class ItemDetail extends Component {
     let currUserId = this.props.auth.isLoggedIn ? this.props.auth.login.user.id : null;
     return (
       <Comment key={comment.id}>
-        <Comment.Avatar as={Image} src={'https://randomuser.me/api/portraits/women/40.jpg'} circular />
+        <Comment.Avatar as={Image} src={comment.User.image_url || defaultImageUrl} circular />
         <Comment.Content>
           <Comment.Author className={styles.commentAuthorName}
-            onClick={() => this.props.history.push(`/user/${1}`)}
-          >Jane Doe</Comment.Author>
+            onClick={() => this.props.history.push(`/user/${comment.User.id}`)}
+          >{comment.User.username}</Comment.Author>
           <Comment.Text>{comment.text}</Comment.Text>
           <Comment.Actions className={styles.commentActions}>
             <Comment.Action>
@@ -100,7 +101,7 @@ class ItemDetail extends Component {
                   <Icon className={styles.descriptionExpand} name='angle double down' />
                 </Divider>
                 <Header className={styles.dealDetails}>
-                  { this.props.auth.isLoggedIn &&
+                  { (this.props.auth.isLoggedIn && post.creator_id !== this.props.auth.login.user.id) &&
                     <Button className={styles.offerToHelp} floated='right' size='mini'
                       onClick={this.open}>OFFER TO HELP</Button>
                   }

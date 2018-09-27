@@ -3,6 +3,7 @@ import {
   POST_GET_ALL,
   POST_GET,
   POST_CREATE,
+  POST_EDIT,
   POST_COMMENT,
   EDIT_COMMENT,
   DELETE_COMMENT,
@@ -12,6 +13,7 @@ export default function (state = [], action) {
   switch (action.type) {
     case POST_GET:
     case POST_CREATE:
+    case POST_EDIT:
     case POST_COMMENT:
     case EDIT_COMMENT:
     case DELETE_COMMENT:

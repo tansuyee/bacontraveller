@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Header, Card, Image, Statistic, Item, Loader, Button, Confirm } from 'semantic-ui-react';
+import { Grid, Header, Card, Image, Statistic, Item, Loader, Button } from 'semantic-ui-react';
 import styles from '../static/css/Profile.module.css';
 import moment from 'moment';
 import { getCountryName } from '../helper';
@@ -18,6 +18,9 @@ class Profile extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn && this.props.auth.isLoggedIn) {
+      this.props.getUser(this.props.auth.login.user.id);
+    }
+    else if (this.props.posts !== prevProps.posts) {
       this.props.getUser(this.props.auth.login.user.id);
     }
   }
@@ -40,7 +43,23 @@ class Profile extends Component {
               {item.transactions.length} transactions
             </Item.Description>
           }
+          <Item.Extra>Status: {item.status}</Item.Extra>
           <Item.Extra>{moment(item.createdAt).fromNow()}</Item.Extra>
+          { isRequest &&
+            <Item.Extra>
+              <Button className={styles.deletePost} floated='right' size='mini'
+                onClick={() => this.props.deletePost(item.id)}
+              >Delete</Button>
+              <Button className={styles.editPost} floated='right' size='mini'
+                onClick={() => this.props.history.push(`/post-edit/${item.id}`)}
+              >Edit</Button>
+              { item.status === "ACCEPTED" &&
+                <Button className={styles.completePost} floated='right' size='mini'
+                  onClick={() => this.props.completePost(item.id)}
+                >Mark as Completed</Button>
+              }
+            </Item.Extra>
+          }
         </Item.Content>
       </Item>
     );
@@ -163,7 +182,8 @@ class Profile extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
-    users: state.users
+    users: state.users,
+    posts: state.posts
   };
 }
 

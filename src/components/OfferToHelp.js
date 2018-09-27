@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Header, Form, Divider, Input, Image, Button, Container} from 'semantic-ui-react';
+import { Grid, Header, Form, Divider, Input, Image, Button } from 'semantic-ui-react';
 import styles from '../static/css/OfferToHelp.module.css';
 
 const paymentOptions = [
@@ -15,7 +15,7 @@ const deliveryOptions = [
 ];
 
 const OfferToHelp = () => (
-    <div className={styles.container}>    
+    <div className={styles.container}>
         <Grid container>
             <Grid.Row>
                 <Grid.Column>

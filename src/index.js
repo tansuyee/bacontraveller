@@ -14,6 +14,7 @@ import ItemDetail from './components/ItemDetail';
 import UserView from './components/UserView';
 import CreateRequest from './components/CreateRequest';
 import UserForm from './components/UserForm';
+import PostForm from './components/PostForm';
 import reducers from './reducers';
 import withTracker from './withTracker';
 
@@ -29,6 +30,7 @@ ReactDOM.render(
           <Route path="/item-detail/:id" component={withTracker(ItemDetail)} />
           <Route path="/user/:id" component={withTracker(UserView)} />
           <Route path='/user-edit/:id' component={withTracker(UserForm)} />
+          <Route path='/post-edit/:id' component={withTracker(PostForm)} />
           <Route path='/create-request' component={withTracker(CreateRequest)} />
           <Route path="/" component={withTracker(App)} />
         </Switch>
