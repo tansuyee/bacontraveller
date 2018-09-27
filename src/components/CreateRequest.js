@@ -5,7 +5,17 @@ import { Grid, Icon, Form, Button, Image } from 'semantic-ui-react';
 import styles from '../static/css/CreateRequest.module.css';
 import { countryOptions } from '../constant';
 
+const cloudName = 'kfwongdev';
+const unsignedUploadPreset = 'cs3216_bacontraveller';
+
 class CreateRequest extends Component {
+
+  constructor(props) {
+    super(props)
+    this.imageFileRef = React.createRef();
+    //this.imageFileHiddenRef = React.createRef();
+    this.imagePreviewRef = React.createRef();
+  }
 
   state = {}
 
@@ -23,6 +33,36 @@ class CreateRequest extends Component {
       if (state[key] === "") return false;
     }
     return true;
+  }
+
+  handleBrowse = (e) => {
+    var url = 'https://api.cloudinary.com/v1_1/'+cloudName+'/upload';
+    var xhr = new XMLHttpRequest();
+    var fd = new FormData();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+  
+    xhr.onreadystatechange = (e) => {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        // File uploaded successfully
+        var response = JSON.parse(xhr.responseText);
+        // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
+        var url = response.secure_url;
+        // Create a thumbnail of the uploaded image, with 150px width
+        var tokens = url.split('/');
+        tokens.splice(-2, 0, 'w_200,c_scale');
+        var src = tokens.join('/');
+        this.imagePreviewRef.current.src = src;
+
+        this.handleChange(e, { name: 'item_image_url', value: src} );
+      }
+    };
+  
+    fd.append('upload_preset', unsignedUploadPreset);
+    fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
+    fd.append('file', e.target.files[0]);
+
+    xhr.send(fd);
   }
 
   render() {
@@ -44,13 +84,15 @@ class CreateRequest extends Component {
                       <Form.Dropdown required label='Deal In' name='country_to' placeholder='Select Country' fluid search selection options={countryOptions} onChange={this.handleChange}/>
                   </Form.Group>
                   <Form.Input required label='Willing to Pay' name='price' placeholder='Amount' onChange={this.handleChange} />
-
+                
                   <Form.Field>
-                      <label>Upload Image</label>
-                      <Image src='https://via.placeholder.com/350x350' centered/>
+                      <label>Upload Image <Button className={styles.browseButton} size='mini' floated='right' onClick={() => this.imageFileRef.current.click()}>BROWSE</Button></label>
+                      <br/>
+                      <input className={styles.imageFile} ref={this.imageFileRef} onChange={this.handleBrowse} type='file' accept='image/*'/>
+                      <img className={styles.uploadImage} ref={this.imagePreviewRef} src='https://via.placeholder.com/250x250'/>
                   </Form.Field>
-                  <Form.Input required label='Image URL (FOR NOW)' name='item_image_url' placeholder='Need to replace this with uploading image' onChange={this.handleChange} />
-                  <Button disabled={!isValid} type='submit' onClick={() => this.handleSubmit()}>Submit</Button>
+
+                  <Button className={styles.submitButton} disabled={!isValid} type='submit' size='mini' floated='right' onClick={() => this.handleSubmit()}>SUBMIT</Button>
                 </Form>
               </Grid.Column>
             </Grid.Row>

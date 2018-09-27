@@ -2,7 +2,7 @@
     padding-top: 80px;
 }
 
-.createRequestForm button{
+.browseButton, .submitButton{
     background-color: #3b8686 !important;
     color: white !important;
 }
@@ -13,4 +13,21 @@
   padding-top: 30px;
   padding-left: 35px;
   color: white !important;
+}
+
+
+.uploadImage {
+    width: 250px;
+    height: 250px;
+    margin: 0px auto;
+    display: block;
+}
+
+.uploadImageMeta{
+    font-weight: 100 !important;
+    font-style: italic !important;
+}
+
+.imageFile {
+    display: none;
 }
