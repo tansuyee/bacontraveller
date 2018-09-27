@@ -13,5 +13,6 @@ export const POST_ACCEPT = 'post_accept';
 export const POST_COMMENT = 'post_comment';
 
 export const USER_GET = 'user_get';
+export const USER_EDIT = 'user_edit';
 export const USER_FOLLOW = 'user_follow';
 export const USER_UNFOLLOW = 'user_unfollow';

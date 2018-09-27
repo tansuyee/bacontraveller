@@ -1,6 +1,9 @@
+import _ from 'lodash';
 import React from 'react';
 import { Grid, Icon, Menu, Sidebar, Button, Transition, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 import styles from '../static/css/Header.module.css';
 class Header extends React.Component {
 
@@ -11,8 +14,36 @@ class Header extends React.Component {
         this.onClickMenu = this.onClickMenu.bind(this)
     }
 
+    componentDidUpdate(prevProps) {
+      if (this.props.auth.isLoggedIn !== prevProps.auth.isLoggedIn && this.props.auth.isLoggedIn) {
+        this.props.getUser(this.props.auth.login.user.id);
+      }
+    }
+
     onClickMenu = () => this.setState({ isSidebarVisible: !this.state.isSidebarVisible, isFabVisible: false })
     onSidebarHidden = () => this.setState({ isSidebarVisible: false, isFabVisible: true })
+
+    renderSidebarTop() {
+      const { isLoggedIn } = this.props.auth;
+
+      if (!isLoggedIn || _.isEmpty(this.props.users)) {
+        return (
+          <div className={styles.sidebarTop}>
+              <Image src='https://randomuser.me/api/portraits/women/8.jpg' bordered/>
+              <h2 className={styles.sidebarUsername}>You are not signed in</h2>
+          </div>
+        )
+      }
+
+      let user = this.props.users[this.props.auth.login.user.id];
+
+      return (
+        <div className={styles.sidebarTop}>
+            <Image src={user.image_url ? user.image_url : 'https://randomuser.me/api/portraits/women/8.jpg'} bordered/>
+            <h2 className={styles.sidebarUsername}>{user.username}</h2>
+        </div>
+      );
+    }
 
     render() {
         const { isSidebarVisible, isFabVisible } = this.state
@@ -20,13 +51,11 @@ class Header extends React.Component {
             <div>
                 <Sidebar.Pushable className={styles.pushable}>
                     <Sidebar as={Menu} animation='push' visible={isSidebarVisible} width='thin' onHide={this.onSidebarHidden} style={{ width: 260 }} inverted vertical>
-                        <div className={styles.sidebarTop}>
-                            <Image src='https://randomuser.me/api/portraits/women/8.jpg' bordered/>
-                            <h2 className={styles.sidebarUsername}>Jane Doe</h2>
-                            <h6 className={styles.sidebarRank}>SuperTraveller</h6>
-                        </div>
+                        { this.renderSidebarTop() }
+                        { !this.props.auth.isLoggedIn &&
+                          <Menu.Item name='Sign In' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
+                        }
                         <Menu.Item name='home' active={this.props.path === "/"} as={Link} to="/" onClick={this.onSidebarHidden} />
-                        <Menu.Item name='Register' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
                         <Menu.Item name='Profile' active={this.props.path === "/profile"} as={Link} to="/profile" onClick={this.onSidebarHidden} />
                         <Menu.Item name='Country Listing' active={this.props.path === "/country-listing"} as={Link} to="/country-listing" onClick={this.onSidebarHidden} />
                     </Sidebar>
@@ -56,4 +85,11 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    users: state.users
+  };
+}
+
+export default connect(mapStateToProps, actions)(Header);
