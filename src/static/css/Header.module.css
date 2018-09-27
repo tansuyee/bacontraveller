@@ -17,7 +17,7 @@
 }
 
 .pushable {
-  height: 100vh;
+  height: 100%;
 }
 
 .pushable a {
@@ -42,9 +42,9 @@
 
 .sidebarTop {
   background-color: #3b8686;
-  height: 30%;
+  height: 250px;
   padding-top: 60%;
-  margin-bottom: 50%;
+  margin-bottom: 125px;
 }
 
 .sidebarTop img {

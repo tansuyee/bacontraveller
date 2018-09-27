@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Grid, Header, Card, Image, Statistic, Item, Loader, Button, Confirm } from 'semantic-ui-react';
+import { Grid, Header, Card, Image, Statistic, Item, Loader, Button } from 'semantic-ui-react';
 import styles from '../static/css/Profile.module.css';
 import moment from 'moment';
 import { getCountryName } from '../helper';

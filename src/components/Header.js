@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import styles from '../static/css/Header.module.css';
+import { defaultImageUrl } from '../constant';
+
+
 class Header extends React.Component {
 
     constructor(props) {
@@ -31,7 +34,7 @@ class Header extends React.Component {
       if (!isLoggedIn || _.isEmpty(this.props.users) || _.isEmpty(this.props.users[this.props.auth.login.user.id])) {
         return (
           <div className={styles.sidebarTop}>
-              <Image src='https://randomuser.me/api/portraits/women/8.jpg' bordered/>
+              <Image src={defaultImageUrl} bordered/>
               <h2 className={styles.sidebarUsername}>You are not signed in</h2>
           </div>
         )
@@ -41,7 +44,7 @@ class Header extends React.Component {
 
       return (
         <div className={styles.sidebarTop}>
-            <Image src={_.isEmpty(user.image_url) ? user.image_url : 'https://randomuser.me/api/portraits/women/8.jpg'} bordered/>
+            <Image src={user.image_url || defaultImageUrl} bordered/>
             <h2 className={styles.sidebarUsername}>{user.username}</h2>
         </div>
       );
