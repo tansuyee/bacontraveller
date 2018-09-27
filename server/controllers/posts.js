@@ -108,6 +108,20 @@ const self = module.exports = {
       })
       .catch(error => res.status(400).send(error));
   },
+  search(req, res) {
+    console.log(req.params.item_name)
+    let condition = { where: {
+      $or: [
+        {'item_name': { like: '%' + req.query.item_name + '%' }},
+        {'description': { like: '%' + req.query.description + '%' }}
+      ]}
+   }
+    Object.assign(condition, self.fullAttributes())
+    return Post
+      .findAll(condition)
+      .then(posts => res.status(200).send(posts))
+      .catch(error => { console.log(error); res.status(400).send(error)});
+  },
   // user accepts someone (for now, a buyer)'s post
   accept(req, res) {
     return Post

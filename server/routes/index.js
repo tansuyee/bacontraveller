@@ -33,6 +33,7 @@ module.exports = (app, auth) => {
 
   app.post('/v1/posts', requireAuth(), postsController.create);
   app.get('/v1/posts', postsController.list);
+  app.get('/v1/posts/search', postsController.search)
   app.get('/v1/posts/:postId', postsController.retrieve);
   app.put('/v1/posts/:postId', requireAuth(), postsController.update);
   app.delete('/v1/posts/:postId', requireAuth(), postsController.destroy);
