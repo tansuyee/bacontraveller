@@ -1,6 +1,9 @@
 {
   "name": "bt-server",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.X.X"
+  },
   "description": "BaconTraveller Server",
   "main": "index.js",
   "license": "MIT",
@@ -11,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "bcrypt": "^3.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
