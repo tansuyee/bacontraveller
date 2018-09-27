@@ -28,7 +28,6 @@ class ItemDetail extends Component {
 
   renderComment(comment) {
     let currUserId = this.props.auth.login.user.id;
-    console.log(currUserId);
     return (
       <Comment key={comment.id}>
         <Comment.Avatar as={Image} src={'https://randomuser.me/api/portraits/women/40.jpg'} circular />

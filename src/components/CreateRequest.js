@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
-import { Grid, Icon, Form, Button, Image } from 'semantic-ui-react';
+import { Grid, Icon, Form, Button } from 'semantic-ui-react';
 import styles from '../static/css/CreateRequest.module.css';
 import { countryOptions } from '../constant';
 
@@ -41,9 +41,9 @@ class CreateRequest extends Component {
     var fd = new FormData();
     xhr.open('POST', url, true);
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  
+
     xhr.onreadystatechange = (e) => {
-      if (xhr.readyState == 4 && xhr.status == 200) {
+      if (xhr.readyState === 4 && xhr.status === 200) {
         // File uploaded successfully
         var response = JSON.parse(xhr.responseText);
         // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
@@ -57,7 +57,7 @@ class CreateRequest extends Component {
         this.handleChange(e, { name: 'item_image_url', value: src} );
       }
     };
-  
+
     fd.append('upload_preset', unsignedUploadPreset);
     fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
     fd.append('file', e.target.files[0]);
@@ -84,12 +84,12 @@ class CreateRequest extends Component {
                       <Form.Dropdown required label='Deal In' name='country_to' placeholder='Select Country' fluid search selection options={countryOptions} onChange={this.handleChange}/>
                   </Form.Group>
                   <Form.Input required label='Willing to Pay' name='price' placeholder='Amount' onChange={this.handleChange} />
-                
+
                   <Form.Field>
                       <label>Upload Image <Button className={styles.browseButton} size='mini' floated='right' onClick={() => this.imageFileRef.current.click()}>BROWSE</Button></label>
                       <br/>
                       <input className={styles.imageFile} ref={this.imageFileRef} onChange={this.handleBrowse} type='file' accept='image/*'/>
-                      <img className={styles.uploadImage} ref={this.imagePreviewRef} src='https://via.placeholder.com/250x250'/>
+                      <img alt='' className={styles.uploadImage} ref={this.imagePreviewRef} src='https://via.placeholder.com/250x250'/>
                   </Form.Field>
 
                   <Button className={styles.submitButton} disabled={!isValid} type='submit' size='mini' floated='right' onClick={() => this.handleSubmit()}>SUBMIT</Button>
