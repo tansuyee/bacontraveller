@@ -3,6 +3,8 @@ const Post = require('../models').Post;
 const Transaction = require('../models').Transaction;
 const User = require('../models').User;
 
+const posts = require('./posts')
+
 module.exports = {
   create(req, res) {
     return Comment
@@ -13,18 +15,7 @@ module.exports = {
     })
     .then(comment => {
       Post
-      .findById(req.params.postId, {
-        include: [{
-          model: Transaction,
-          as: 'transactions',
-        },{
-          model: Comment,
-          as: 'comments',
-        },{
-          model: User,
-          attributes: ["id", "username", "image_url"]
-        }],
-      })
+      .findById(req.params.postId, posts.fullAttributes())
       .then(post => {
         if (!post) {
           return res.status(404).send({
@@ -57,18 +48,7 @@ module.exports = {
         })
         .then(() => { 
           Post
-          .findById(req.params.postId, {
-            include: [{
-              model: Transaction,
-              as: 'transactions',
-            },{
-              model: Comment,
-              as: 'comments',
-            },{
-              model: User,
-              attributes: ["id", "username", "image_url"]
-            }],
-          })
+          .findById(req.params.postId, posts.fullAttributes())
           .then(post => {
             if (!post) {
               return res.status(404).send({
@@ -95,18 +75,7 @@ module.exports = {
           .destroy()
           .then(() => { 
             Post
-            .findById(req.params.postId, {
-              include: [{
-                model: Transaction,
-                as: 'transactions',
-              },{
-                model: Comment,
-                as: 'comments',
-              },{
-                model: User,
-                attributes: ["id", "username", "image_url"]
-              }],
-            })
+            .findById(req.params.postId, posts.fullAttributes())
             .then(post => {
               if (!post) {
                 return res.status(404).send({

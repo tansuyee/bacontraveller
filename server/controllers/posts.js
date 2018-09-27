@@ -159,6 +159,10 @@ const self = module.exports = {
         },{
           model: Comment,
           as: 'comments',
+          include: [{
+            model: User,
+            attributes: ["id", "username", "image_url"]
+          }]
         },{
           model: User,
           attributes: ["id", "username", "image_url"]
