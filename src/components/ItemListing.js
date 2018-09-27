@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Button, Card, Grid, Header, Image } from 'semantic-ui-react';
+import { getCountryName } from '../helper';
 import styles from '../static/css/ItemListing.module.css';
 
 function getPosts(props) {
@@ -45,7 +46,7 @@ class ItemListing extends Component {
           <Grid.Row>
             <Grid.Column>
               <Header className={styles.title} as='h1'>
-                <span>{this.props.match.params.country}</span>
+                <span>{getCountryName(this.props.match.params.country)}</span>
                 <Header.Subheader className={styles.titleSubheader}>{posts.length} Posts</Header.Subheader>
               </Header>
             </Grid.Column>
