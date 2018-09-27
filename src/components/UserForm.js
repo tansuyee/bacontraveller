@@ -5,9 +5,17 @@ import { connect } from 'react-redux';
 import { Confirm, Grid, Icon, Form, Button, Image, Loader } from 'semantic-ui-react';
 import styles from '../static/css/CreateRequest.module.css';
 
+const cloudName = 'kfwongdev';
+const unsignedUploadPreset = 'cs3216_bacontraveller';
+
 class UserForm extends Component {
 
-  state = {}
+  constructor(props) {
+    super(props)
+    this.imageFileRef = React.createRef();
+    this.imagePreviewRef = React.createRef();
+    this.state = {}
+  }
 
   componentDidMount() {
     this.props.getUser(this.props.match.params.id)
@@ -15,6 +23,36 @@ class UserForm extends Component {
 
   open = () => this.setState({ open: true })
   close = () => this.setState({ open: false })
+
+  handleBrowse = (e) => {
+    var url = 'https://api.cloudinary.com/v1_1/'+cloudName+'/upload';
+    var xhr = new XMLHttpRequest();
+    var fd = new FormData();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    xhr.onreadystatechange = (e) => {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // File uploaded successfully
+        var response = JSON.parse(xhr.responseText);
+        // https://res.cloudinary.com/cloudName/image/upload/v1483481128/public_id.jpg
+        var url = response.secure_url;
+        // Create a thumbnail of the uploaded image, with 150px width
+        var tokens = url.split('/');
+        tokens.splice(-2, 0, 'w_200,c_scale');
+        var src = tokens.join('/');
+        this.imagePreviewRef.current.src = src;
+
+        this.handleChange(e, { name: 'image_url', value: src} );
+      }
+    };
+
+    fd.append('upload_preset', unsignedUploadPreset);
+    fd.append('tags', 'browser_upload'); // Optional - add tag for image admin in Cloudinary
+    fd.append('file', e.target.files[0]);
+
+    xhr.send(fd);
+  }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
 
@@ -52,8 +90,10 @@ class UserForm extends Component {
                     onChange={this.handleChange}
                   />
                   <Form.Field>
-                      <label>Upload New Profile Image</label>
-                      <Image src='https://via.placeholder.com/350x350' centered/>
+                      <label>Upload New Profile Image<Button className={styles.browseButton} size='mini' floated='right' onClick={() => this.imageFileRef.current.click()}>BROWSE</Button></label>
+                      <br/>
+                      <input className={styles.imageFile} ref={this.imageFileRef} onChange={this.handleBrowse} type='file' accept='image/*'/>
+                      <img className={styles.uploadImage} ref={this.imagePreviewRef} src={user.image_url}/>
                   </Form.Field>
                   <Button type='submit' onClick={() => this.open()}>Submit</Button>
                   <Confirm
