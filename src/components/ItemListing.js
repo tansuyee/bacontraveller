@@ -53,7 +53,7 @@ class ItemListing extends Component {
           </Grid.Row>
             <Grid.Row>
               <Grid.Column>
-                <Card.Group className={styles.itemList} itemsPerRow={2}>
+                <Card.Group className={styles.itemList} itemsPerRow={1}>
                   {rows}
                 </Card.Group>
               </Grid.Column>
