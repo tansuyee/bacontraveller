@@ -83,7 +83,7 @@ class Header extends React.Component {
                                     <Icon name='list layout' size='big' onClick={this.onClickMenu} link />
                                 </Grid.Column>
                                 <Grid.Column className={styles.search} floated='right' width={5} textAlign='right'>
-                                    <Icon name='search' size='big' />
+                                    <Icon name='search' size='big' onClick={() => this.props.history.push("/search")} />
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>

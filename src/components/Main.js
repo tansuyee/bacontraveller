@@ -5,6 +5,7 @@ import Profile from './Profile';
 import CountryListing from './CountryListing';
 import ItemListing from './ItemListing';
 import OfferToHelp from './OfferToHelp';
+import SearchBox from './SearchBox';
 
 const Main = () => (
   <main>
@@ -14,6 +15,7 @@ const Main = () => (
       <Route path="/country-listing" component={CountryListing} />
       <Route path="/offer-to-help" component={OfferToHelp} />
       <Route path="/item-listing/:country" component={ItemListing} />
+      <Route path="/search" component={SearchBox} />
     </Switch>
   </main>
 )
