@@ -21,7 +21,7 @@ class SearchBox extends Component {
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
 
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
+  handleResultSelect = (e, { result }) => this.props.history.push(`/item-detail/${result.id}`)
 
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
@@ -30,11 +30,11 @@ class SearchBox extends Component {
       if (this.state.value.length < 1) return this.resetComponent()
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.title)
+      const isMatch = result => re.test(result.item_name)
 
       this.setState({
         isLoading: false,
-        results: _.filter(source, isMatch),
+        results: _.filter(this.props.posts, isMatch),
       })
     }, 300)
   }
@@ -64,6 +64,7 @@ class SearchBox extends Component {
 
 function mapStateToProps(state) {
   return {
+    posts: state.posts
   };
 }
 
