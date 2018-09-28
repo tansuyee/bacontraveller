@@ -1,0 +1,84 @@
+.container {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  padding-top: 75px;
+  background-size: auto 40% !important;
+  background-image: url('../../assets/profile/background.png') !important;
+}
+
+.notLoggedIn {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9999;
+  padding-top: 75px;
+  background-size: cover !important;
+  background-image: url('../../assets/profile/background.png') !important;
+}
+
+.menu, .search{
+  color: white;
+}
+
+.title {
+  color: white !important;
+}
+
+.titleSubheader{
+  font-size: 10pt !important;
+  color: white !important;
+}
+
+.rank{
+  font-size: 10pt !important;
+  font-style: italic;
+  color: darkgray;
+}
+
+.bio{
+  font-size: 10pt !important;
+}
+
+.statistics *{
+  color: white !important;
+}
+
+.subContainer{
+  background-color: #252525;
+  height: 100%;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.plannedTripTitle{
+  font-size: 16pt !important;
+  color: white !important;
+  margin-top: 5px !important;
+}
+
+.plannedTripContent *{
+  color: white !important;
+  z-index: 10000;
+}
+
+.edit {
+  background-color: white !important;
+  border-radius: 25px !important;
+}
+
+.back {
+  position: absolute;
+  z-index: 10000;
+  padding-top: 30px;
+  padding-left: 35px;
+  color: white !important;
+}
+
+.follow {
+  background-color: white !important;
+  border-radius: 25px !important;
+}

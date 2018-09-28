@@ -1,0 +1,51 @@
+:global(body){
+    background-color: #252525 !important;
+}
+
+.container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    padding-top: 20px;
+}
+
+.container * {
+    color: white !important;
+}
+
+.menu, .search {
+    color: white;
+}
+
+.dealLocation{
+    font-size: 10pt !important;
+    font-weight: bold !important;
+    color: #3b8686 !important;
+}
+
+.amount {
+    color: #3b8686 !important;
+}
+
+.header {
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    background-color: #3b8686;
+}
+
+.itemPost {
+    padding-top: 100px;
+}
+
+.details {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+}
+
+.dropdown {
+    color: black !important;
+}
