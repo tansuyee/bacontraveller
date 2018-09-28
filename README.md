@@ -33,7 +33,13 @@
 - Create another file `./server/config/secrets.js` that looks like this. The secret can be anything you want.
 ```
 module.exports = {  
-  jwtSecret: "anythingyouwanthere"
+  jwtSecret: "anythingyouwanthere",
+  facebookAuth: {
+    'clientID': <id>,
+    'clientSecret': <secret>,
+    'callbackURL': 'https://api.bacontraveller.tk/v1/login/facebook/callback',
+    'profileURL': 'https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email'
+  }
 };
 ```
 - Install dependencies with `yarn install`
