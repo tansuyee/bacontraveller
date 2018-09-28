@@ -20,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     return await bcrypt.compare(password, this.password);
   }
 
+  User.prototype.toJSON = function() {
+    let values = Object.assign({}, this.get());
+    delete values.password;
+    return values;
+  }
+
   User.associate = function(models) {
     User.hasMany(models.Post, {
       foreignKey: 'creator_id',
