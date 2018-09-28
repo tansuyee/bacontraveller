@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { offline } from 'redux-offline';
+import offlineConfig from 'redux-offline/lib/defaults';
 import ReduxPromise from 'redux-promise';
 import ReduxThunk from 'redux-thunk';
 import registerServiceWorker from './registerServiceWorker';
@@ -18,11 +20,16 @@ import PostForm from './components/PostForm';
 import reducers from './reducers';
 import withTracker from './withTracker';
 
-const createStoreWithMiddleware = applyMiddleware(ReduxPromise, ReduxThunk)(createStore);
-
+const store = createStore(
+  reducers,
+  compose(
+    applyMiddleware(ReduxPromise, ReduxThunk),
+    offline(offlineConfig)
+  )
+);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
+  <Provider store={store}>
     <AuthContainer>
       <BrowserRouter>
         <Switch>
