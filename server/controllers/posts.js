@@ -128,6 +128,11 @@ const self = module.exports = {
     return Post
       .findById(req.params.postId)
       .then(post => {
+        if (!post) {
+          return res.status(404).send({
+            message: 'Post Not Found',
+          });
+        }
         // do not allow a user to accept his own post
         if (req.user.id == post.creator_id) {
           return res.status(401).send({
