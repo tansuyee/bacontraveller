@@ -65,7 +65,7 @@ class Header extends React.Component {
                         <Menu.Item name='Profile' active={this.props.path === "/profile"} as={Link} to="/profile" onClick={this.onSidebarHidden} />
                         <Menu.Item name='Country Listing' active={this.props.path === "/country-listing"} as={Link} to="/country-listing" onClick={this.onSidebarHidden} />
                         { this.props.auth.isLoggedIn ?
-                          <Button color='red' fluid onClick={this.open}>Log out</Button> :
+                          <Menu.Item onClick={this.open}>Log out</Menu.Item> :
                           <Menu.Item name='Sign In' active={this.props.path === "/register"} as={Link} to="/register" onClick={this.onSidebarHidden} />
                         }
                         <Confirm
