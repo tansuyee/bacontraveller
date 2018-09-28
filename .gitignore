@@ -1,0 +1,5 @@
+node_modules/
+.vscode/
+server/config/secrets.js
+server/config/config.json
+app.yaml
