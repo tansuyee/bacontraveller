@@ -6,12 +6,16 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-    image_url: DataTypes.STRING
+    image_url: DataTypes.STRING,
+    facebook_provider_id: DataTypes.STRING,
+    facebook_provider_token: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: async function(user) {
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);  
+        }
       } 
     }
   });

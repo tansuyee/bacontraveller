@@ -20,5 +20,23 @@ module.exports = {
         return res.json({user, token});
       });
     })(req, res);
+  },
+  facebookLogin(req, res, next) {
+    passport.authenticate('facebook-token', constants.jwtSession, (err, user, info) => {
+      if (err || !user) {
+        console.log(err)
+        return res.status(400).send(info);
+      }
+      req.login(user, constants.jwtSession, (err) => {
+        if (err) {
+          res.send(err);
+        }
+        const contents = {
+          id: user.id,
+        }
+        const token = jwt.sign(contents, secrets.jwtSecret);
+        return res.json({user, token});
+      });
+    })(req, res);
   }
 };

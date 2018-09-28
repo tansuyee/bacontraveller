@@ -21,6 +21,7 @@ module.exports = (app, auth) => {
   }));
 
   app.post('/v1/login', authController.login);
+  app.post('/v1/login/facebook', authController.facebookLogin);
 
   app.post('/v1/users', usersController.create);
   app.get('/v1/users', adminOnly(usersController.list));
