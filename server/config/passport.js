@@ -8,11 +8,11 @@ const secrets = require('./secrets');
 
 const User = require('../models').User;
 
-passport.use(new LocalStrategy(function(username, password, done) {
+passport.use(new LocalStrategy({usernameField : 'email'}, function(email, password, done) {
   User
-    .findOne({ where: {username: username}})
+    .findOne({ where: {email: email}})
     .then(async function(user) {
-      if (!user) return done(null, false, { message: 'Incorrect username.' });
+      if (!user) return done(null, false, { message: 'Invalid email.' });
       if (!await user.validPassword(password)) return done(null, false, { message: 'Incorrect password.' });
       return done(null, user);
    })
