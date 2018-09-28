@@ -3,6 +3,8 @@ import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Grid, Header, Form, Message, Icon } from 'semantic-ui-react';
 import styles from '../static/css/Register.module.css';
+import FacebookLogin from 'react-facebook-login';
+import { facebookAppID } from '../constant';
 
 class Register extends Component {
 
@@ -28,6 +30,10 @@ class Register extends Component {
       this.setState({email: '', username: '', password: ''})
     }
   }
+
+  facebookResponse = (response) => {
+    this.props.facebookLogin({access_token: response.accessToken});
+  };
 
   render() {
     const { signIn, email, username, password } = this.state;
@@ -72,6 +78,11 @@ class Register extends Component {
                 </Header>
               </Form.Field>
             </Form>
+            <FacebookLogin
+              appId={facebookAppID}
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={this.facebookResponse} />
             { this.props.auth.login && this.props.auth.login.message &&
               <Message
                 error

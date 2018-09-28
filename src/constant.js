@@ -4,6 +4,7 @@ const ROOT_API = window.location.protocol + "//" + hostname;
 
 export const API_URL = {
   LOGIN: `${ROOT_API}/v1/login`,
+  FACEBOOK_LOGIN: `${ROOT_API}/v1/login/facebook`,
   SIGNUP: `${ROOT_API}/v1/users`,
   GET_ALL_POST: `${ROOT_API}/v1/posts`,
   POST_BASE: `${ROOT_API}/v1/posts`,
@@ -11,6 +12,8 @@ export const API_URL = {
 }
 
 export const defaultImageUrl = require('./assets/default-user-image.png');
+
+export const facebookAppID = "1120786828083863";
 
 export const countryOptions = [
   { key: 'sg', value: 'sg', flag: 'sg', text: 'Singapore' },
