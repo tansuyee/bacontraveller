@@ -81,7 +81,7 @@ class UserForm extends Component {
                     defaultValue={user.email}
                     onChange={this.handleChange}
                   />
-                  <Form.Input label='Username' name='username' placeholder='Display Name'
+                  <Form.Input label='Display Name' name='username' placeholder='Display Name'
                     defaultValue={user.username}
                     onChange={this.handleChange}
                   />
