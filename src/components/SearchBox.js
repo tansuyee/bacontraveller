@@ -17,6 +17,8 @@ const source = _.times(5, () => ({
 class SearchBox extends Component {
   componentWillMount() {
     this.resetComponent()
+
+    this.props.getAllPosts();
   }
 
   resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
@@ -26,15 +28,26 @@ class SearchBox extends Component {
   handleSearchChange = (e, { value }) => {
     this.setState({ isLoading: true, value })
 
+    const searchDB = Object.values(this.props.posts).map( post => {
+      return {
+        title: post.item_name,
+        description: post.description,
+        image: post.item_image_url,
+        price: post.price
+      }
+    })
+
     setTimeout(() => {
       if (this.state.value.length < 1) return this.resetComponent()
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.item_name)
+      const isMatch = result => re.test(result.title)
 
       this.setState({
         isLoading: false,
-        results: _.filter(this.props.posts, isMatch),
+
+        results: _.filter(searchDB, isMatch),
+
       })
     }, 300)
   }
@@ -67,5 +80,6 @@ function mapStateToProps(state) {
     posts: state.posts
   };
 }
+
 
 export default connect(mapStateToProps, actions)(SearchBox);
