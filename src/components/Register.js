@@ -82,7 +82,8 @@ class Register extends Component {
               appId={facebookAppID}
               autoLoad={false}
               fields="name,email,picture"
-              callback={this.facebookResponse} />
+              callback={this.facebookResponse}
+              disableMobileRedirect={true} />
             { this.props.auth.login && this.props.auth.login.message &&
               <Message
                 error
