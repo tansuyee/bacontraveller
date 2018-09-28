@@ -3,6 +3,8 @@ import * as actions from '../actions';
 import { connect } from 'react-redux';
 import { Grid, Header, Form, Message, Icon } from 'semantic-ui-react';
 import styles from '../static/css/Register.module.css';
+import FacebookLogin from 'react-facebook-login';
+import { facebookAppID } from '../constant';
 
 class Register extends Component {
 
@@ -22,12 +24,16 @@ class Register extends Component {
     const { signIn, email, username, password } = this.state;
 
     if (signIn) {
-      this.props.login({username: username, password: password});
+      this.props.login({email: email, password: password});
     } else {
       this.props.signup({email: email, username: username, password: password});
       this.setState({email: '', username: '', password: ''})
     }
   }
+
+  facebookResponse = (response) => {
+    this.props.facebookLogin({access_token: response.accessToken});
+  };
 
   render() {
     const { signIn, email, username, password } = this.state;
@@ -50,9 +56,9 @@ class Register extends Component {
                 </Header>
               </Form.Field>
               { !signIn &&
-                <Form.Input placeholder='Email Address' name='email' value={email} onChange={this.handleChange} />
+                <Form.Input placeholder='Display Name' name='username' value={username} onChange={this.handleChange} />
               }
-              <Form.Input placeholder='Username' name='username' value={username} onChange={this.handleChange}/>
+              <Form.Input placeholder='Email' name='email' value={email} onChange={this.handleChange}/>
               <Form.Input placeholder='Password' name='password' value={password} type='password' onChange={this.handleChange}/>
               { signIn ?
                 <Form.Button size='huge' fluid loading={isFetching} disabled={isFetching}>SIGN IN</Form.Button> :
@@ -72,6 +78,11 @@ class Register extends Component {
                 </Header>
               </Form.Field>
             </Form>
+            <FacebookLogin
+              appId={facebookAppID}
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={this.facebookResponse} />
             { this.props.auth.login && this.props.auth.login.message &&
               <Message
                 error

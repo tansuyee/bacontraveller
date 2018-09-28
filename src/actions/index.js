@@ -243,6 +243,30 @@ export function login(creds) {
   }
 }
 
+export function facebookLogin(creds) {
+  return function (dispatch) {
+    dispatch(requestLogin(creds))
+
+    return axios({
+      method: 'post',
+      url: API_URL.FACEBOOK_LOGIN,
+      data: creds
+    })
+    .then((response) => {
+      console.log(response);
+      localStorage.setItem('access_token', response.data.token)
+      dispatch(receiveLogin(response.data))
+    })
+    .catch((err) => {
+      if (err.response) {
+        console.log("Error: ", err)
+        dispatch(loginError(err.response.data.message))
+      }
+      throw err;
+    })
+  }
+}
+
 export function logOut() {
   localStorage.removeItem('access_token');
   return {type: LOGOUT,
