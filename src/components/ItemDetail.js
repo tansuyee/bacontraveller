@@ -97,11 +97,12 @@ class ItemDetail extends Component {
             <Grid.Column>
               <Header className={styles.itemTitle}>{post.item_name}</Header>
                 <p className={styles.itemDescription}>{post.description}</p>
+                <p className={styles.itemDescription}>Status: {post.status}</p>
                 <Divider horizontal>
                   <Icon className={styles.descriptionExpand} name='angle double down' />
                 </Divider>
                 <Header className={styles.dealDetails}>
-                  { (this.props.auth.isLoggedIn && post.creator_id !== this.props.auth.login.user.id) &&
+                  { (this.props.auth.isLoggedIn && post.creator_id !== this.props.auth.login.user.id && post.status === "PENDING") &&
                     <Button className={styles.offerToHelp} floated='right' size='mini'
                       onClick={this.open}>OFFER TO HELP</Button>
                   }
